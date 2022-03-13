@@ -1,0 +1,79 @@
+.footer{
+    background: rgb(10, 30, 94);
+    margin: auto;
+    position: relative;
+    color: #fff;
+    
+    
+    &-content{
+        width: 80%;
+        display: flex;
+        border-bottom: 1px #ccc solid ;
+        margin: auto;
+
+        &-right{
+            width: 70%;
+            display: flex;
+            text-align: center;
+            justify-content: space-between;
+            padding-top: 32px;
+            
+            &-info{
+                width: 30%;
+                display: flex;
+                flex-direction: column;               
+            }
+            &-info-3{
+                width: 30%;
+                display: flex;
+                flex-wrap: wrap;
+                
+
+                &-connectus{
+                    width: 100%;
+                }
+                &-icon{
+                    width: 20%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+
+                }
+                &-icon:hover{
+                    transform: scale(1.2);
+                    cursor: pointer;
+                }
+            }
+        }
+
+        &-left{
+            display: flex;
+            align-items: center;
+            margin: auto;
+            width: 30%;
+        }
+    }
+    &-coppyright{
+        width: 80%;
+        padding:20px;
+        margin: auto;
+        display: flex;
+        &-left{
+            width: 50%;
+            text-align: center;
+            font-size: 16px;
+            width: 40%;
+        }
+        
+        &-right{
+            width: 50%;
+            float: right;
+            display: flex;
+
+        }
+
+        }
+
+    }   
+        
+    

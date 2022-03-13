@@ -1,0 +1,143 @@
+.seatplan {
+  width: 100%;
+  background-color: #001232;
+  color: #fff;
+  &-title {
+    width: 100%;
+    height: 100px;
+    background-color: #032055;
+    border: 1px solid #032055;
+    display:flex;
+    flex-direction: row;
+    &-label{
+        width: 25%;
+        height: 100px;
+        font-size: 20px;
+        text-align: center;
+        padding-top:10px;
+
+    }
+  }
+  &-content {
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+
+    &-screen {
+        text-align: center;
+        padding: 40px;
+        height:fit-content;
+        .column{
+            display: flex;
+            width: 800px;
+            margin: auto;
+
+            &-count{
+                width: 40px;
+                height: 40px;
+                text-align: center;
+                padding: 32px;
+
+            }
+        }
+        
+        &-col{
+            width: 60px;
+            padding-top: 80px;
+            height: fit-content;
+            .col{
+                padding: 20px;
+                width: 40px;
+                height: 40px;
+                margin-top: 8px;
+            }
+        }
+
+      h2 {
+        padding: 20px;
+        
+      }
+      .seatwrap{
+          display: flex;
+          flex-direction: row;
+          width: fit-content;
+          margin: auto;
+      }
+
+      &-seat {
+          padding-top: 80px;
+          width: 840px;
+          display: flex;
+          flex-wrap: wrap;
+        &-singgle {
+          width: 40px;
+          height: 40px;
+          position: relative;
+          margin: 12px;
+          
+
+          .checkbackground {
+            display: block;
+            top: 0px;
+            left: 0px;
+            background-image: url("http://pixner.net/boleto/demo/assets/images/movie/seat01.png");
+            width: 40px;
+            height: 40px;
+            z-index: 1;
+            margin-top: 8px;
+            padding: 4px;
+
+            
+
+          }
+          input {
+            width: 100%;
+            height: 100%;
+            left: 0px;
+            position: absolute;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+          }
+          input:checked {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  &-proceed {
+    margin: auto;
+    width: 100%;
+    .container{
+        width: 60%;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    background-color: #032055;    
+
+    &-seat,&-price{
+      width: 40%;
+      padding: 40px;
+      
+    }
+    &-btn{
+        width: 20%;
+        margin: auto;
+        button{
+            background-image: -webkit-linear-gradient(
+                169deg,
+                #5560ff 17%,
+                #aa52a1 63%,
+                #ff4343 100%
+              );
+              padding: 20px;
+              border-radius: 100px;
+        }
+    }
+  }
+}
