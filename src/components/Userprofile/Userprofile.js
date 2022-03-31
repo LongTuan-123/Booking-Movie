@@ -10,17 +10,14 @@ import { API_LOGOUT } from "../../config/endpointapi";
 import { useHistory } from "react-router-dom";
 import { HOME } from "../../config/path";
 
-
-
 const Userprofile = () => {
-  const user = JSON.parse(localStorage.getItem("data"));
-  const [token] = useState(localStorage.getItem("token"));
+  const user = JSON.parse(localStorage.getItem("data_user"));
+  const [token] = useState(localStorage.getItem("token_user"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
-  console.log(user);
+
   const onLogout = () => {
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-    // console.log(token);
     axios
       .post(API_LOGOUT)
       .then(function (res) {
@@ -59,7 +56,7 @@ const Userprofile = () => {
               <img src="https://dmitryvolkov.me/demo/flixgo2.0/main/img/user.svg" />
             </div>
             <div className="userprofile-header-name">
-              {`Wellcome ${user.ten} ${user.ho}`}
+              {`Wellcome ${user?.ten} ${user?.ho}`}
               
             </div>
             <div className="userprofile-header-id"></div>
@@ -76,13 +73,13 @@ const Userprofile = () => {
               <div className="userprofile-detail-info-label">Hồ sơ</div>
               <ul className="userprofile-detail-info-list">
                 <li>
-                  Họ : <span>{user.ho}</span>
+                  Họ : <span>{user?.ho}</span>
                 </li>
                 <li>
-                  Tên : <span>{user.ten}</span>
+                  Tên : <span>{user?.ten}</span>
                 </li>
                 <li>
-                  Tuổi : <span>{user.tuoi}</span>{" "}
+                  Tuổi : <span>{user?.tuoi}</span>{" "}
                 </li>
                 <li>
                   Địa chỉ : <span>{user.dia_chi}</span>{" "}

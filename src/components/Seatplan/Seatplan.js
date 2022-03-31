@@ -1,13 +1,36 @@
+import axios from "axios";
 import Layout from "../../Layout/Layout";
 import Navigation from "../../Layout/Navigation";
 import "../../style/Seatplan.scss";
 import Countdown from "react-countdown";
+import { useEffect, useState } from "react";
+import { bindParam } from "../../config/function";
+import { API_SEAT_IN_ROOM } from "../../config/endpointapi";
+import { useParams } from "react-router-dom";
+
 const Seatplan = () => {
+  const { id } = useParams()
   const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
+  const [token] = useState(localStorage.getItem("token_user"));
   const row = [];
-  for (var i = 1; i <= 12; i++) {
+  const [seat, setSeat] = useState()
+  
+  for (var i = 1; i <= 6; i++) {
     row.push(i);
   }
+
+  useEffect(() => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    const getSeat = async () => {
+      await axios.get(bindParam(API_SEAT_IN_ROOM, { id }))
+        .then((res) => {
+          console.log(res)
+        })
+    }
+
+    getSeat()
+  }, [])
+
   const renderer = ({ minutes, seconds, completed }) => {
     return (
       <span>
@@ -15,9 +38,7 @@ const Seatplan = () => {
       </span>
     );
   };
-  const onSubmit = async (value) => {
-    console.log(value);
-  };
+
   return (
     <Layout>
       <Navigation />

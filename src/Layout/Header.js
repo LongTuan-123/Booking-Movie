@@ -14,7 +14,7 @@ import {
 import User from "../asset/user";
 
 const Header = () => {
-  const user = JSON.parse(localStorage.getItem("data"));
+  const user = JSON.parse(localStorage.getItem("data_user"));
   return (
     <div className="header">
       {/* <div className="header-container">
@@ -74,7 +74,7 @@ const Header = () => {
           </div>
           {user ? (
             <Link className="header-navbar-content-right-nav" to={USER_PROFILE}>
-              {`${user.ten}_${user.ho}`}
+              {`${user.first_name} ${user.last_name}`}
             </Link>
           ) : (
             <Link className="header-navbar-content-right-nav-btn" to={LOGIN}>
