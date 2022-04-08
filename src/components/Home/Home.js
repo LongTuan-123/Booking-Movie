@@ -43,8 +43,10 @@ const Home = () => {
     getShowtime();
   }, [limit, page, keyword]);
 
-  const handleSwitchTicket = (id) => {
-    history.push(bindParam(SEAT_PLAN, {id}))
+  const handleSwitchTicket = (showtime) => {
+    const { room , id} = showtime
+    history.push(bindParam(SEAT_PLAN, { id: room.id}))
+    localStorage.setItem("@showtime", id)
   }
   
   return (
@@ -104,7 +106,7 @@ const Home = () => {
                           <span>Thể loại: {m?.movie?.type_of_movie}</span>
                           <span>Thời lượng: {m?.movie?.range_of_movie} phút</span>
                         </div>
-                        <div className="home-grid-content-image-hover-booking" onClick={() => handleSwitchTicket(m?.movie?.id)}>
+                        <div className="home-grid-content-image-hover-booking" onClick={() => handleSwitchTicket(m)}>
                           Đặt vé
                         </div>
                       </div>
