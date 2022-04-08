@@ -3,7 +3,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { ToastContainer, toast } from "react-toastify";
 const style = { layout: "vertical" };
 
-const ButtonWrapper = ({ amount, currency, showSpinner }) => {
+const ButtonWrapper = ({ amount, currency, showSpinner, onAccept, onDenied }) => {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
   useEffect(() => {
@@ -20,17 +20,6 @@ const ButtonWrapper = ({ amount, currency, showSpinner }) => {
   return (
     <>
       {showSpinner && isPending && <div className="spinner" />}
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={false}
-        pauseOnHover
-      />
       <PayPalButtons
         style={style}
 				
@@ -54,17 +43,11 @@ const ButtonWrapper = ({ amount, currency, showSpinner }) => {
               return orderId;
             });
         }}
-        onApprove={function (data, actions) {
-          return actions.order.capture().then(function (e) {
-            console.log(data, e);
-          });
-        }}
+        onApprove={onAccept}
 				onShippingChange={(data) => {
 					console.log(data)
 				}}
-        onCancel={() => {
-          toast.warn("You have cancel the transaction");
-        }}
+        onCancel={onDenied}
       />
     </>
   );

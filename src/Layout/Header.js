@@ -67,10 +67,6 @@ const Header = () => {
             <Link className="header-navbar-content-right-nav" to={NEWS}>
               Tin tức
             </Link>
-
-            <Link className="header-navbar-content-right-nav" to={SEAT_PLAN}>
-              Đặt ghế
-            </Link>
           </div>
           {user ? (
             <Link className="header-navbar-content-right-nav" to={USER_PROFILE}>

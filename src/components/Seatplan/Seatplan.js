@@ -14,6 +14,7 @@ const Seatplan = () => {
   const { id } = useParams();
   const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
   const [token] = useState(localStorage.getItem("token_user"));
+  const dataUser =  JSON.parse(localStorage.getItem('data_user')).id
   const row = [];
   const [selectSeat, setSelectSeat] = useState([]);
   const [moneyDetail, setMoneyDetail] = useState([]);
@@ -78,10 +79,11 @@ const Seatplan = () => {
         confirm: 0,
         money: moneyDetail.join(","),
         created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+        user_id: dataUser
       })
       .then((res) => {
         localStorage.setItem("@ticket", JSON.stringify(selectSeat))
-        history.push(PAYMENT)
+        history.push(bindParam(PAYMENT, { id }))
       })
       .catch((err) => {
         console.log(err);
