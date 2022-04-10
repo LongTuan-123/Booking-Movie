@@ -87,7 +87,6 @@ const Home = () => {
         <div className="home-grid">
           <div className="home-grid-content ">
             <div className="home-grid-content-title">Phim đang chiếu</div>
-
             <div className="container">
               <Slider {...settings}>
                 {movies.map((m) => {

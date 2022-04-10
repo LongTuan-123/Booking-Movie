@@ -32,9 +32,9 @@ const News = lazy(() => import("../components/News/News"));
 const Newsdetail = lazy(() => import("../components/News/Newsdetail"));
 
 const AppRouter = () => {
-  const user = JSON.parse(localStorage.getItem("data_user")) | null;
-  const token = localStorage.getItem("token_user") | null;
-  console.log(user, token);
+  const user = localStorage.getItem("data_user");
+  const token = localStorage.getItem("token_user");
+  const ticket = localStorage.getItem("@ticket");
 
   return (
     <Suspense fallback={<div>loading</div>}>
@@ -49,10 +49,18 @@ const AppRouter = () => {
           <Route path={MOVIE_DETAIL} exact>
             <Moviedetail />
           </Route>
-          <Route path={PAYMENT} exact>
-            <Payment />
-          </Route>
-          <Route path={SEAT_PLAN} exact render={() => <Seatplan />} />
+          <Route
+            path={PAYMENT}
+            exact
+            component={(props) =>
+              ticket ? <Payment {...props} /> : <Redirect to={LOGIN} />
+            }
+          />
+          <Route
+            path={SEAT_PLAN}
+            exact
+            component={(props) => <Seatplan {...props} />}
+          />
           <Route path={NEWS} exact>
             <News />
           </Route>
@@ -62,22 +70,26 @@ const AppRouter = () => {
           <Route
             path={USER_PROFILE}
             exact
-            render={() =>
-              user && token ? <Userprofile /> : <Redirect to={LOGIN} />
+            component={(props) =>
+              user && token ? (
+                <Userprofile {...props} />
+              ) : (
+                <Redirect to={LOGIN} />
+              )
             }
           />
           <Route
             path={LOGIN}
             exact
-            render={() =>
-              user === 0 || token === 0 ? <Login /> : <Redirect to={HOME} />
+            component={(props) =>
+              user && token ? <Redirect to={HOME} /> : <Login {...props} />
             }
           />
           <Route
             path={SIGNUP}
             exact
-            render={() =>
-              user === 0 || token === 0 ? <Signup /> : <Redirect to={HOME} />
+            component={(props) =>
+              user && token ? <Redirect to={HOME} /> : <Signup {...props} />
             }
           />
           <Route>

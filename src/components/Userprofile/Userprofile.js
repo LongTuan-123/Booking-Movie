@@ -30,8 +30,8 @@ const Userprofile = () => {
           draggable: true,
           progress: 0,
         });
-        localStorage.removeItem("data");
-        localStorage.removeItem("token");
+        localStorage.removeItem("data_user");
+        localStorage.removeItem("data_user");
         history.push(HOME);
       })
       .catch(function (error) {

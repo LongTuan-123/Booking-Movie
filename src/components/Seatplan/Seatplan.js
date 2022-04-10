@@ -2,19 +2,20 @@ import axios from "axios";
 import Layout from "../../Layout/Layout";
 import Navigation from "../../Layout/Navigation";
 import "../../style/Seatplan.scss";
-import Countdown from "react-countdown";
 import { useEffect, useState } from "react";
 import { bindParam } from "../../config/function";
 import { API_ORDER_SEAT, API_SEAT_IN_ROOM } from "../../config/endpointapi";
 import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
-import { PAYMENT } from "../../config/path";
+import { LOGIN, PAYMENT } from "../../config/path";
+import { toast, ToastContainer } from "react-toastify";
 
 const Seatplan = () => {
   const { id } = useParams();
   const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
   const [token] = useState(localStorage.getItem("token_user"));
-  const dataUser =  JSON.parse(localStorage.getItem('data_user')).id
+  const dataUser =  JSON.parse(localStorage.getItem('data_user'))?.id
+  const user = localStorage.getItem("data_user")
   const row = [];
   const [selectSeat, setSelectSeat] = useState([]);
   const [moneyDetail, setMoneyDetail] = useState([]);
@@ -36,14 +37,6 @@ const Seatplan = () => {
 
     getSeat();
   }, []);
-
-  const renderer = ({ minutes, seconds, completed }) => {
-    return (
-      <span>
-        {minutes}:{seconds}
-      </span>
-    );
-  };
 
   const onSelectSeat = (e) => {
     const { value, checked } = e.target;
@@ -69,30 +62,46 @@ const Seatplan = () => {
   };
 
   const handlePayment = () => {
-    console.log(selectSeat.map((seat) => seat.id));
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    if(dataUser && user) {
+      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+  
+      axios
+        .post(API_ORDER_SEAT, {
+          seats: selectSeat.map((seat) => seat.id).join(","),
+          showtime_id: Number(localStorage.getItem("@showtime")),
+          confirm: 0,
+          money: moneyDetail.join(","),
+          created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+          user_id: dataUser
+        })
+        .then((res) => {
+          localStorage.setItem("@ticket", JSON.stringify(selectSeat))
+          history.push(bindParam(PAYMENT, { id }))
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    axios
-      .post(API_ORDER_SEAT, {
-        seats: selectSeat.map((seat) => seat.id).join(","),
-        showtime_id: Number(localStorage.getItem("@showtime")),
-        confirm: 0,
-        money: moneyDetail.join(","),
-        created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
-        user_id: dataUser
-      })
-      .then((res) => {
-        localStorage.setItem("@ticket", JSON.stringify(selectSeat))
-        history.push(bindParam(PAYMENT, { id }))
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    }else {
+      toast.warn("Vui lòng đăng nhập để chọn ghế")
+      history.push(LOGIN)
+    }
   };
 
   return (
     <Layout>
       <Navigation />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover
+      />
       <div className="seatplan">
         <div className="seatplan-title">
           <div className="seatplan-title-label">Phòng chiếu</div>
@@ -102,10 +111,7 @@ const Seatplan = () => {
           <div className="seatplan-title-label">
             Time left
             <br />
-            <Countdown
-              date={Date.now() + 300000}
-              renderer={renderer}
-            ></Countdown>
+            
           </div>
         </div>
         <div className="seatplan-content">
