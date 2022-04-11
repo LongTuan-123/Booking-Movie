@@ -15,7 +15,6 @@ const currency = "USD";
 const Payment = () => {
   const { id } = useParams();
   const ticket = JSON.parse(localStorage.getItem("@ticket"));
-  const [token] = useState(localStorage.getItem("token_user"));
   const history = useHistory();
   const [complete, setComplete] = useState(false);
   const [ticketID, setTicketID] = useState([]);
@@ -30,9 +29,20 @@ const Payment = () => {
     );
   };
 
+  // useEffect(() => {
+  //   const getTicket = async () => {
+  //     const params = { limit: 1000, seat: seatSearch, page: 1, keyword: localStorage.getItem("@showtime") }
+  //     await axios.get(API_TICKET, {params})
+  //       .then(res => {
+  //         setShowtime(res?.data?.data?.data)
+  //       })
+  //   }
+
+  //   getTicket()
+  // }, [])
+
   useEffect(() => {
     const deleteData = async () => {
-      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
       await axios
         .post(API_DELETE_SEAT, { id_count: ticketID?.join(","), showtime: id })
         .then(() => {
@@ -51,6 +61,10 @@ const Payment = () => {
   }, [complete]);
 
   useEffect(() => {
+
+  }, [])
+
+  useEffect(() => {
     if (ticket) {
       ticket?.map((t) => {
         setTicketID((prev) => [...prev, t?.id]);
@@ -61,7 +75,6 @@ const Payment = () => {
   }, []);
 
   const handleAccept = async () => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
     await axios
       .post(API_PAY_SEAT, {
         confirm: 1,

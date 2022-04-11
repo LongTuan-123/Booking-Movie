@@ -5,18 +5,26 @@
     z-index: 4;
   }
   &-snapbook {
-    height: 116px;
     width: 100%;
+    padding: 20px 0px;
     vertical-align: auto;
     display: block;
-    text-transform: uppercase;
     font-size: 20px;
     .container{
       width: 75%;
       margin: auto;
       display: flex;
+      align-items: center;
+      
+      
+
+      &_input__title {
+        color: white;
+      }
+
       &-title{
         h2{
+          text-transform: uppercase;
           font-family: 'Futurab';
           font-weight: normal;
           font-size: 36px;
@@ -31,27 +39,23 @@
         }
       }
       .wrap{
-        color: #000 !important;
-        padding: 10px;
-        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      .select_date {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+      }
+      .select_time {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
       }
     }
 
-    background-image: url("https://cinestar.com.vn/catalog/view/theme/default/images/pattern.png");
-    select,input {
-      background-image: -webkit-linear-gradient(
-        169deg,
-        #5560ff 17%,
-        #aa52a1 63%,
-        #ff4343 100%
-      );
-      margin: 0px 30px;
-      width: 200px;
-      height: 50px;
-      border-radius: 50px;
-      color: #000;
-      text-transform: uppercase;
-    }
+    background-color: transparent;
   }
 
   &-grid {
@@ -84,10 +88,15 @@
       }
       .container{
         width: 80%;
+
+        &__no-movies {
+          margin: 150px 0px;
+          text-transform: none;
+        }
       }
 
       &-image {
-        width: 60%;
+        width: 200px;
         color: #fff;
         text-align: center;
         text-transform: uppercase;
@@ -98,7 +107,6 @@
         overflow: hidden;
         img {
           padding-bottom: 20px;
-          width: 70%;
           margin: auto;
           height: 400px;
           z-index: 0;

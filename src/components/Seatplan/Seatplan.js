@@ -4,7 +4,7 @@ import Navigation from "../../Layout/Navigation";
 import "../../style/Seatplan.scss";
 import { useEffect, useState } from "react";
 import { bindParam } from "../../config/function";
-import { API_ORDER_SEAT, API_SEAT_IN_ROOM } from "../../config/endpointapi";
+import { API_ORDER_SEAT, API_SEAT_IN_ROOM, API_TICKET } from "../../config/endpointapi";
 import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
 import { LOGIN, PAYMENT } from "../../config/path";
@@ -12,14 +12,16 @@ import { toast, ToastContainer } from "react-toastify";
 
 const Seatplan = () => {
   const { id } = useParams();
+  const [showtime, setShowtime] = useState([])
+  const [ticket, setTicket] = useState([])
+  const [seatSearch] = useState("")
   const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
-  const [token] = useState(localStorage.getItem("token_user"));
-  const dataUser =  JSON.parse(localStorage.getItem('data_user'))?.id
-  const user = localStorage.getItem("data_user")
+  const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
+  const user = localStorage.getItem("data_user");
   const row = [];
   const [selectSeat, setSelectSeat] = useState([]);
   const [moneyDetail, setMoneyDetail] = useState([]);
-  const history = useHistory()
+  const history = useHistory();
   const [money, setMoney] = useState(0);
   const [seat, setSeat] = useState();
 
@@ -28,7 +30,26 @@ const Seatplan = () => {
   }
 
   useEffect(() => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    const getTicket = async () => {
+      const params = { limit: 1000, seat: seatSearch, page: 1, keyword: localStorage.getItem("@showtime") }
+      await axios.get(API_TICKET, {params})
+        .then(res => {
+          setShowtime(res?.data?.data?.data)
+        })
+    }
+
+    getTicket()
+  }, [])
+
+  useEffect(() => {
+    if(showtime) {
+      showtime?.map(showT => {
+        setTicket((prev) => [...prev, showT?.seat?.id])
+      })
+    }
+  }, [showtime])
+
+  useEffect(() => {
     const getSeat = async () => {
       await axios.get(bindParam(API_SEAT_IN_ROOM, { id })).then((res) => {
         setSeat(res?.data?.data);
@@ -62,9 +83,7 @@ const Seatplan = () => {
   };
 
   const handlePayment = () => {
-    if(dataUser && user) {
-      axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-  
+    if (dataUser && user) {
       axios
         .post(API_ORDER_SEAT, {
           seats: selectSeat.map((seat) => seat.id).join(","),
@@ -72,19 +91,18 @@ const Seatplan = () => {
           confirm: 0,
           money: moneyDetail.join(","),
           created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
-          user_id: dataUser
+          user_id: dataUser,
         })
         .then((res) => {
-          localStorage.setItem("@ticket", JSON.stringify(selectSeat))
-          history.push(bindParam(PAYMENT, { id }))
+          localStorage.setItem("@ticket", JSON.stringify(selectSeat));
+          history.push(bindParam(PAYMENT, { id }));
         })
         .catch((err) => {
           console.log(err);
         });
-
-    }else {
-      toast.warn("Vui lòng đăng nhập để chọn ghế")
-      history.push(LOGIN)
+    } else {
+      toast.warn("Vui lòng đăng nhập để chọn ghế");
+      history.push(LOGIN);
     }
   };
 
@@ -111,7 +129,6 @@ const Seatplan = () => {
           <div className="seatplan-title-label">
             Time left
             <br />
-            
           </div>
         </div>
         <div className="seatplan-content">
@@ -137,6 +154,7 @@ const Seatplan = () => {
                         <input
                           onChange={onSelectSeat}
                           className="checkseat"
+                          checked={ticket.includes(se?.id) ? true: null}
                           value={JSON.stringify(se)}
                           type="checkbox"
                         />

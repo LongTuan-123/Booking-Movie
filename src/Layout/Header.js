@@ -8,10 +8,8 @@ import {
   HOME,
   LOGIN,
   NEWS,
-  SEAT_PLAN,
   USER_PROFILE,
 } from "../config/path";
-import User from "../asset/user";
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));

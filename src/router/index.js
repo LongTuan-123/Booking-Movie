@@ -1,15 +1,16 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
 } from "react-router-dom";
 import NotFound from "../components/NotFound/NotFound";
 import Payment from "../components/Payment/Payment";
 import Seatplan from "../components/Seatplan/Seatplan";
 import Userprofile from "../components/Userprofile/Userprofile";
+import { bindParam, isLogin, isTicket } from "../config/function";
+import axios from "axios";
 import {
   CONTACT,
   HOME,
@@ -32,46 +33,89 @@ const News = lazy(() => import("../components/News/News"));
 const Newsdetail = lazy(() => import("../components/News/Newsdetail"));
 
 const AppRouter = () => {
-  const user = localStorage.getItem("data_user");
-  const token = localStorage.getItem("token_user");
-  const ticket = localStorage.getItem("@ticket");
+  const showtime = localStorage.getItem("@showtime");
+  const token= localStorage.getItem("token_user");
+
+  useEffect(() => {
+    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+  }, [token])
 
   return (
     <Suspense fallback={<div>loading</div>}>
       <Router>
         <Switch>
-          <Route path={HOME} exact>
-            <Home />
-          </Route>
-          <Route path={CONTACT} exact>
-            <Contact />
-          </Route>
-          <Route path={MOVIE_DETAIL} exact>
-            <Moviedetail />
-          </Route>
+          <Route
+            path={HOME}
+            exact
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : (
+                <Home {...props} />
+              )
+            }
+          />
+          <Route
+            path={CONTACT}
+            exact
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : (
+                <Contact {...props} />
+              )
+            }
+          />
+          <Route
+            path={MOVIE_DETAIL}
+            exact
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : (
+                <Moviedetail {...props} />
+              )
+            }
+          />
           <Route
             path={PAYMENT}
             exact
-            component={(props) =>
-              ticket ? <Payment {...props} /> : <Redirect to={LOGIN} />
+            render={(props) =>
+              isTicket() ? <Payment {...props} /> : <Redirect to={LOGIN} />
             }
           />
           <Route
             path={SEAT_PLAN}
             exact
-            component={(props) => <Seatplan {...props} />}
+            component={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : (
+                <Seatplan {...props} />
+              )
+            }
           />
           <Route path={NEWS} exact>
             <News />
           </Route>
-          <Route path={NEWS_DETAIL} exact>
-            <Newsdetail />
-          </Route>
+          <Route
+            path={NEWS_DETAIL}
+            exact
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : (
+                <Newsdetail {...props} />
+              )
+            }
+          />
           <Route
             path={USER_PROFILE}
             exact
-            component={(props) =>
-              user && token ? (
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : isLogin() ? (
                 <Userprofile {...props} />
               ) : (
                 <Redirect to={LOGIN} />
@@ -81,15 +125,27 @@ const AppRouter = () => {
           <Route
             path={LOGIN}
             exact
-            component={(props) =>
-              user && token ? <Redirect to={HOME} /> : <Login {...props} />
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : isLogin() ? (
+                <Redirect to={HOME} />
+              ) : (
+                <Login {...props} />
+              )
             }
           />
           <Route
             path={SIGNUP}
             exact
-            component={(props) =>
-              user && token ? <Redirect to={HOME} /> : <Signup {...props} />
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : isLogin() ? (
+                <Redirect to={HOME} />
+              ) : (
+                <Signup {...props} />
+              )
             }
           />
           <Route>

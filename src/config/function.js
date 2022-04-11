@@ -5,5 +5,9 @@ export const bindParam =(url,params)=>{
 }
 
 export const isLogin = () => {
-    return !!localStorage.getItem("data") && !!localStorage.getItem("token")
+    return !!localStorage.getItem("data_user") && !!localStorage.getItem("token_user")
+}
+
+export const isTicket = () => {
+    return !!localStorage.getItem("@ticket")
 }
