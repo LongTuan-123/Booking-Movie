@@ -1,29 +1,32 @@
 .home {
   background-color: #001232;
   width: 100%;
+
   &-banner {
     z-index: 4;
   }
+
   &-snapbook {
     width: 100%;
     padding: 20px 0px;
     vertical-align: auto;
     display: block;
     font-size: 20px;
-    .container{
+
+    .container {
       width: 75%;
       margin: auto;
       display: flex;
       align-items: center;
-      
-      
+
+
 
       &_input__title {
         color: white;
       }
 
-      &-title{
-        h2{
+      &-title {
+        h2 {
           text-transform: uppercase;
           font-family: 'Futurab';
           font-weight: normal;
@@ -38,24 +41,58 @@
           font-weight: 800;
         }
       }
-      .wrap{
+
+      .wrap {
         padding: 20px;
         display: flex;
         flex-direction: column;
+
+        select {
+          background-image: -webkit-linear-gradient(169deg,
+              #5560ff 17%,
+              #aa52a1 63%,
+              #ff4343 100%);
+          border-radius: 50px;
+          padding: 10px;
+
+        }
       }
+
       .select_date {
         padding: 20px;
         display: flex;
         flex-direction: column;
+
+        input {
+          background-image: -webkit-linear-gradient(169deg,
+              #5560ff 17%,
+              #aa52a1 63%,
+              #ff4343 100%);
+          border-radius: 50px;
+          padding: 10px;
+
+        }
       }
+
       .select_time {
         padding: 20px;
         display: flex;
+
+        select {
+          background-image: -webkit-linear-gradient(169deg,
+              #5560ff 17%,
+              #aa52a1 63%,
+              #ff4343 100%);
+          border-radius: 50px;
+          padding: 10px;
+
+        }
+
         flex-direction: column;
       }
     }
 
-    background-color: transparent;
+    background-image: url("https://cinestar.com.vn/catalog/view/theme/default/images/pattern.png");
   }
 
   &-grid {
@@ -71,7 +108,8 @@
       text-align: center;
       text-transform: uppercase;
       justify-content: space-between;
-      &-title{
+
+      &-title {
         font-family: 'Futurab';
         font-weight: normal;
         font-size: 36px;
@@ -86,7 +124,8 @@
         padding: 20px;
         border-bottom: 2px rgba(11, 7, 66, 0.5) solid;
       }
-      .container{
+
+      .container {
         width: 80%;
 
         &__no-movies {
@@ -105,15 +144,18 @@
         margin: 20px;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         overflow: hidden;
+
         img {
           padding-bottom: 20px;
           margin: auto;
           height: 400px;
           z-index: 0;
         }
+
         span {
           padding: 10px;
         }
+
         &-hover {
           position: absolute;
           bottom: 20%;
@@ -129,19 +171,19 @@
           left: 0px;
           right: 0px;
           font-weight: 500;
+
           &-detail {
             border: 1px red solid;
             border-radius: 20px;
             padding: 8px;
             width: 100%;
           }
+
           &-detail:hover {
-            background-image: -webkit-linear-gradient(
-              169deg,
-              #5560ff 17%,
-              #aa52a1 63%,
-              #ff4343 100%
-            );
+            background-image: -webkit-linear-gradient(169deg,
+                #5560ff 17%,
+                #aa52a1 63%,
+                #ff4343 100%);
             opacity: 0.8;
           }
 
@@ -151,21 +193,22 @@
             padding: 8px;
             width: 100%;
           }
+
           &-booking:hover {
-            background-image: -webkit-linear-gradient(
-              169deg,
-              #5560ff 17%,
-              #aa52a1 63%,
-              #ff4343 100%
-            );
+            background-image: -webkit-linear-gradient(169deg,
+                #5560ff 17%,
+                #aa52a1 63%,
+                #ff4343 100%);
             opacity: 0.8;
           }
+
           &-info {
             display: flex;
             flex-direction: column;
             font-size: 12px;
           }
         }
+
         &-background {
           position: absolute;
           bottom: 0px;
@@ -176,16 +219,19 @@
           display: none;
           z-index: 1;
         }
+
         &:hover {
           color: rgb(10, 30, 94);
           transform: scale(1.04);
           transition: transform 0.5s, filter 1.5s step-end;
           cursor: pointer;
         }
+
         &:hover &-hover {
           display: block;
           animation: down-to-up 1s ease-in-out;
         }
+
         &:hover &-background {
           display: block;
           animation: down-to-up 1s ease-in-out;
@@ -196,11 +242,18 @@
 
   &-banner {
     width: 100%;
+
     &-img {
       img {
         width: 100%;
       }
     }
+  }
+
+  .container_input__title {
+    color: #000;
+    font-size: 1.5em;
+    padding: 12px;
   }
 }
 

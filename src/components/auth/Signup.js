@@ -1,29 +1,33 @@
 import "./Signup.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { API_REGISTER } from "../../config/endpointapi";
+import { LOGIN } from "../../config/path";
 
 const Signup = () => {
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const [confirm, setConfirm] = useState();
+  const history = useHistory();
   const onChangeConfirm = (val) => {
     setConfirm(val.target.value);
   };
   const onSubmit = (value) => {
+    value.admin = false;
     if (value.password === value.confirm) {
       axios
-  
+
         .post(API_REGISTER, value)
         .then(function (res) {
-          
+          history.push(LOGIN);
+
           console.log(res);
           toast.success("Đăng kí thành công", {
             position: "top-center",
@@ -55,7 +59,7 @@ const Signup = () => {
                 <input
                   className="signup-form__input"
                   placeholder="Enter your first name"
-                  {...register("ho", { required: true })}
+                  {...register("first_name", { required: true })}
                 />
               </div>
               {errors.firstname && <span>Nhập họ của bạn</span>}
@@ -68,7 +72,7 @@ const Signup = () => {
                 <input
                   className="signup-form__input"
                   placeholder="Enter your last name"
-                  {...register("ten", { required: true })}
+                  {...register("last_name", { required: true })}
                 />
               </div>
               {errors.lastname && <span>Nhập tên của bạn</span>}
@@ -83,7 +87,7 @@ const Signup = () => {
                 <input
                   className="signup-form__input"
                   placeholder="Enter your age"
-                  {...register("tuoi", { min: 6, max: 99 }, { required: true })}
+                  {...register("age", { min: 6, max: 99 }, { required: true })}
                 />
               </div>
               {errors.age && <span>Age is required</span>}
@@ -108,7 +112,7 @@ const Signup = () => {
               <input
                 className="signup-form__input"
                 placeholder="Enter your address"
-                {...register("dia_chi", { required: true })}
+                {...register("address", { required: true })}
               />
             </div>
             {errors.address && <span>Nhập địa chỉ</span>}
@@ -121,7 +125,7 @@ const Signup = () => {
               <input
                 className="signup-form__input"
                 placeholder="Enter your phone number"
-                {...register("so_DT", { required: true })}
+                {...register("phonenumber", { required: true })}
               />
             </div>
             {errors.phonenumber && <span>Nhập số điện thoại</span>}
@@ -134,7 +138,7 @@ const Signup = () => {
               <input
                 className="signup-form__input"
                 placeholder="Enter your personal ID"
-                {...register("CMND", { required: true })}
+                {...register("person_id", { required: true })}
               />
             </div>
             {errors.CMND && <span>Nhập số CMND</span>}

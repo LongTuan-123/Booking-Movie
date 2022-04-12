@@ -8,16 +8,22 @@ import { useHistory } from "react-router-dom";
 import { bindParam } from "../../config/function";
 import { MOVIE_DETAIL, SEAT_PLAN } from "../../config/path";
 import Slider from "react-slick";
-import { API_SHOWTIME, API_SHOWTIME_TIME } from "../../config/endpointapi";
+import {
+  API_BANNER,
+  API_SHOWTIME,
+  API_SHOWTIME_TIME,
+} from "../../config/endpointapi";
 import moment from "moment";
+import { Carousel, Col, Container, Row } from "react-bootstrap";
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [limit] = useState(1000);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
-  const [time, setTime] = useState("")
-  const [timeBaseOnDate, setTimeBaseOnDate] = useState([])
-  const [movieSelectTime, setMovieSelectTime] = useState([])
-  const [movieSelect, setMovieSelect] = useState([])
+  const [time, setTime] = useState("");
+  const [timeBaseOnDate, setTimeBaseOnDate] = useState([]);
+  const [movieSelectTime, setMovieSelectTime] = useState([]);
+  const [banner, setBanner] = useState([]);
+  const [movieSelect, setMovieSelect] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [page] = useState(1);
   const history = useHistory();
@@ -28,12 +34,27 @@ const Home = () => {
     infinite: true,
     slidesToScroll: 1,
     centerPadding: "20px",
-    slidesToShow: movies?.length > 1 ? movies?.length > 2 ? 3 : 2 : 1,
+    slidesToShow: movies?.length > 1 ? (movies?.length > 2 ? 3 : 2) : 1,
   };
 
   const switchDetail = (id) => {
     history.push(bindParam(MOVIE_DETAIL, { id }));
   };
+  useEffect(() => {
+    const getBanner = async () => {
+      const params = { limit, page, keyword };
+      await axios
+        .get(API_BANNER, { params })
+        .then((res) => {
+          setBanner(res?.data?.data?.data);
+          console.log(banner);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getBanner();
+  }, [limit, page, keyword]);
 
   useEffect(() => {
     const getShowtime = async () => {
@@ -52,86 +73,80 @@ const Home = () => {
 
   useEffect(() => {
     const getShowtime = async () => {
-      const params = {date};
+      const params = { date };
       await axios
         .get(API_SHOWTIME_TIME, { params })
         .then((res) => {
-          setMovieSelectTime(res?.data?.data)
+          setMovieSelectTime(res?.data?.data);
         })
         .catch((err) => {
           console.log(err);
         });
     };
     getShowtime();
-  }, [date])
+  }, [date]);
 
   useEffect(() => {
-    if(movieSelectTime) {
-      let movieSelectClone = []
-      movieSelectTime?.map(movies => {
-        if(!movieSelectClone?.includes(movies?.show_time)){
-          movieSelectClone.push(movies?.show_time)
-          setTimeBaseOnDate(movieSelectClone)
+    if (movieSelectTime) {
+      let movieSelectClone = [];
+      movieSelectTime?.map((movies) => {
+        if (!movieSelectClone?.includes(movies?.show_time)) {
+          movieSelectClone.push(movies?.show_time);
+          setTimeBaseOnDate(movieSelectClone);
         }
-      })
+      });
     }
-  }, [movieSelectTime])
-  
+  }, [movieSelectTime]);
+
   useEffect(() => {
-    if(movieSelectTime) {
-      let movieSelectClone = []
-      movieSelectTime?.map(movies => {
-        console.log(movies?.movie?.name)
-        if(!movieSelectClone?.includes(movies?.movie?.name)){
-          movieSelectClone.push(movies?.movie?.name)
-          setMovieSelect(movieSelect)
+    if (movieSelectTime) {
+      let movieSelectClone = [];
+      movieSelectTime?.map((movies) => {
+        console.log(movies?.movie?.name);
+        if (!movieSelectClone?.includes(movies?.movie?.name)) {
+          movieSelectClone.push(movies?.movie?.name);
+          setMovieSelect(movieSelect);
         }
-      })
+      });
     }
-  }, [movieSelectTime])
-  
-  console.log(movieSelect)
+  }, [movieSelectTime]);
+
+  console.log(movieSelect);
 
   const handleSwitchTicket = (showtime) => {
-    const { room , id} = showtime
-    history.push(bindParam(SEAT_PLAN, { id: room.id}))
-    localStorage.setItem("@showtime", id)
-  }
+    const { room, id } = showtime;
+    history.push(bindParam(SEAT_PLAN, { id: room.id }));
+    localStorage.setItem("@showtime", id);
+  };
 
   const handleDate = (e) => {
-    setDate(e.target.value)
-    setTimeBaseOnDate([])
-  }
+    setDate(e.target.value);
+    setTimeBaseOnDate([]);
+  };
 
   const handleTime = (e) => {
-    setTime(e.target.value)
-  }
+    setTime(e.target.value);
+  };
 
   const handleKeyword = (e) => {
-    setKeyword(e.target.value)
-  }
+    setKeyword(e.target.value);
+  };
   return (
     <Layout>
       <div className="home">
-        {/* <Carousel
-          className="d-block"
-          style={{ height: "800px", objectFit: "cover" }}
-          activeIndex={index}
-          onSelect={handleSelect}
-          variant="dark"
-        >
-          {banner.map((slide, index) => {
+        <Carousel fade>
+          {banner.map((slide, id) => {
             return (
-              <Carousel.Item key={`slide_${index}`} interval={3000} style={{ height: "800px" }}>
+              <Carousel.Item key={`slide_${id}`} interval={3000}>
                 <img
                   style={{ height: "100%" }}
-                  className=" d-block w-100"
-                  src={slide.banner}
+                  className=" d-block w-100 h-75"
+                  src={slide.image}
                 />
               </Carousel.Item>
             );
           })}
-        </Carousel> */}
+        </Carousel>
 
         <div className="home-snapbook">
           <div className="container">
@@ -141,31 +156,38 @@ const Home = () => {
             </div>
             <div className="wrap">
               <span className="container_input__title">Chọn phim</span>
-              <select defaultValue={"- Vui lòng chọn bộ phim -"} onChange={handleKeyword}>
-                <option style={{display: "none"}}>-Vui lòng chọn bộ phim-</option>
-                {movieSelect?.map(movie => {
-                  return (
-                    <option value={movie}>
-                      {movie}
-                    </option>
-                  )
+              <select
+                defaultValue={"- Vui lòng chọn bộ phim -"}
+                onChange={handleKeyword}
+              >
+                <option style={{ display: "none" }}>
+                  -Vui lòng chọn bộ phim-
+                </option>
+                {movieSelect?.map((movie) => {
+                  return <option value={movie}>{movie}</option>;
                 })}
               </select>
             </div>
             <div className="select_date">
               <span className="container_input__title">Chọn ngày</span>
-              <input min={moment().format("YYYY-MM-DD")} onChange={handleDate} type={"date"} defaultValue={moment().format("YYYY-MM-DD")}/>
+              <input
+                min={moment().format("YYYY-MM-DD")}
+                onChange={handleDate}
+                type={"date"}
+                defaultValue={moment().format("YYYY-MM-DD")}
+              />
             </div>
             <div className="select_time">
               <span className="container_input__title">Chọn thời gian</span>
-              <select defaultValue={"- Vui lòng chọn giờ chiếu -"} onChange={handleTime}>
-                <option style={{display: "none"}}>-Vui lòng chọn giờ chiếu-</option>
-                {timeBaseOnDate?.map(time => {
-                  return (
-                    <option value={time}>
-                      {time}
-                    </option>
-                  )
+              <select
+                defaultValue={"- Vui lòng chọn giờ chiếu -"}
+                onChange={handleTime}
+              >
+                <option style={{ display: "none" }}>
+                  -Vui lòng chọn giờ chiếu-
+                </option>
+                {timeBaseOnDate?.map((time) => {
+                  return <option value={time}>{time}</option>;
                 })}
               </select>
             </div>
@@ -184,7 +206,11 @@ const Home = () => {
                 {movies.map((m) => {
                   return (
                     <div className="home-grid-content-image" key={m.id}>
-                      <img style={{ width: movies?.length > 2 ? "70%" : "50%"}} src={m?.movie?.poster} alt={m?.movie?.name}/>
+                      <img
+                        style={{ width: movies?.length > 2 ? "70%" : "50%" }}
+                        src={m?.movie?.poster}
+                        alt={m?.movie?.name}
+                      />
                       <span>{m?.show_time}</span>
                       <span>{m?.movie?.name}</span>
                       <div className="home-grid-content-image-hover">
@@ -196,9 +222,14 @@ const Home = () => {
                         </div>
                         <div className="home-grid-content-image-hover-info">
                           <span>Thể loại: {m?.movie?.type_of_movie}</span>
-                          <span>Thời lượng: {m?.movie?.range_of_movie} phút</span>
+                          <span>
+                            Thời lượng: {m?.movie?.range_of_movie} phút
+                          </span>
                         </div>
-                        <div className="home-grid-content-image-hover-booking" onClick={() => handleSwitchTicket(m)}>
+                        <div
+                          className="home-grid-content-image-hover-booking"
+                          onClick={() => handleSwitchTicket(m)}
+                        >
                           Đặt vé
                         </div>
                       </div>

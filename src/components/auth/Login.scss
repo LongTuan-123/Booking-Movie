@@ -2,36 +2,44 @@
   margin: 0px;
   padding: 0px;
 }
+
 html {
   height: 100%;
 }
+
 .login {
   color: #fff;
+  height: 100vh;
   background-image: url(https://dmitryvolkov.me/demo/flixtv/main/img/bg.jpg);
-  height: 1000px;
-  position: relative;
+  display: flex;
+  align-items: center;
+
   background-size: cover;
   background-repeat: no-repeat;
+  margin: auto;
+  align-items: center;
 
   &-container {
     width: 40%;
+    height: fit-content;
     margin: auto;
     background-color: rgba(27, 46, 100, 0.7);
     box-shadow: 0px 0px 29.4px 0.6px #000;
-    position: absolute;
-    top: 20%;
-    left: 30%;
     padding: 50px 0px;
   }
 
   &-title {
     color: #31b8d7;
+    font-size: 32px;
+    text-transform: uppercase;
+    font-weight: 500;
     padding-bottom: 12px;
   }
 
   &-form {
     width: 100%;
     text-align: center;
+
     &__input {
       width: 100%;
       border: none;
@@ -39,6 +47,7 @@ html {
       background-color: transparent;
       color: #fff;
     }
+
     &-border {
       margin: auto;
       border-bottom: 2px rgba(11, 7, 66, 0.5) solid;
@@ -46,12 +55,15 @@ html {
       width: 80%;
     }
   }
+
   &-label {
     padding: 12px;
     position: relative;
-    span{
+
+    span {
       color: red;
-      &-name{
+
+      &-name {
         position: absolute;
         right: 0px;
       }
@@ -61,15 +73,14 @@ html {
   &-btn {
     margin-top: 20px;
     padding: 20px;
-    background-image: -webkit-linear-gradient(
-      169deg,
-      #5560ff 17%,
-      #aa52a1 63%,
-      #ff4343 100%
-    );
+    background-image: -webkit-linear-gradient(169deg,
+        #5560ff 17%,
+        #aa52a1 63%,
+        #ff4343 100%);
     border-radius: 30px;
     width: 50%;
   }
+
   &-question {
     padding: 10px;
   }

@@ -10,14 +10,17 @@ import { API_LOGOUT } from "../../config/endpointapi";
 import { useHistory } from "react-router-dom";
 import { HOME } from "../../config/path";
 
+
+
 const Userprofile = () => {
-  const user = JSON.parse(localStorage.getItem("data_user"));
-  const [token] = useState(localStorage.getItem("token_user"));
+  const user = JSON.parse(localStorage.getItem("data"));
+  const [token] = useState(localStorage.getItem("token"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
-
+  console.log(user);
   const onLogout = () => {
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
+    console.log(token);
     axios
       .post(API_LOGOUT)
       .then(function (res) {
@@ -30,8 +33,8 @@ const Userprofile = () => {
           draggable: true,
           progress: 0,
         });
-        localStorage.removeItem("data_user");
-        localStorage.removeItem("data_user");
+        localStorage.removeItem("data");
+        localStorage.removeItem("token");
         history.push(HOME);
       })
       .catch(function (error) {
@@ -51,51 +54,52 @@ const Userprofile = () => {
       <Navigation />
       <div className="userprofile ">
         <div className="userprofile-header">
-          <div className="container">
-            <div className="userprofile-header-icon">
+          <div className="container row m-auto">
+            <div className="d-flex col-xl-8 col-sm-12 m-auto">
+            <div className="userprofile-header-icon ">
               <img src="https://dmitryvolkov.me/demo/flixgo2.0/main/img/user.svg" />
             </div>
-            <div className="userprofile-header-name">
-              {`Wellcome ${user?.ten} ${user?.ho}`}
-              
+            <div className="userprofile-header-name ">
+              {`Wellcome ${user.last_name} ${user.first_name}`}
+            
             </div>
-            <div className="userprofile-header-id"></div>
-            <div className="userprofile-header-btn">
-              <button  className="text-blue-600" onClick={onLogout} type="">
+            </div>
+            <div className="userprofile-header-btn col-xl-2 col-sm-12 text-center">
+              <button  className="m-auto" onClick={onLogout}>
                 Log out
               </button>
             </div>
           </div>
         </div>
         <div className="userprofile-detail">
-          <div className="container">
-            <div className="userprofile-detail-info">
+          <div className="container row m-auto">
+            <div className="userprofile-detail-info mt-4 col-xl-5 col-sm-12">
               <div className="userprofile-detail-info-label">Hồ sơ</div>
               <ul className="userprofile-detail-info-list">
                 <li>
-                  Họ : <span>{user?.ho}</span>
+                  Họ : <span>{user.last_name}</span>
                 </li>
                 <li>
-                  Tên : <span>{user?.ten}</span>
+                  Tên : <span>{user.first_name}</span>
                 </li>
                 <li>
-                  Tuổi : <span>{user?.tuoi}</span>{" "}
+                  Tuổi : <span>{user.age}</span>{" "}
                 </li>
                 <li>
-                  Địa chỉ : <span>{user.dia_chi}</span>{" "}
+                  Địa chỉ : <span>{user.address}</span>{" "}
                 </li>
                 <li>
-                  Số điện thoại : <span>{user.so_DT}</span>{" "}
+                  Số điện thoại : <span>{user.phonenumber}</span>{" "}
                 </li>
                 <li>
-                  CMND : <span>{user.CMND}</span>{" "}
+                  CMND : <span>{user.person_id}</span>{" "}
                 </li>
                 <li>
                   Email : <span>{user.email}</span>
                 </li>
               </ul>
             </div>
-            <div className="userprofile-detail-security">
+            <div className="userprofile-detail-security mt-4 col-xl-5 col-sm-12">
               <form className="modify">
                 <div className="modify-label">Đổi mật khẩu</div>
                 <div className="modify-label-name">
@@ -128,9 +132,12 @@ const Userprofile = () => {
                     {...register("confirm")}
                   />
                 </div>
+                <div className="text-center">
+
                 <button className="modify-btn " type='submit'>
                     Xác nhận
                 </button>
+                </div>
               </form>
             </div>
           </div>

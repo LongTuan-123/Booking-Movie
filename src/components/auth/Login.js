@@ -1,4 +1,3 @@
-import "./Login.scss";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,7 +6,7 @@ import { HOME, SIGNUP } from "../../config/path";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { API_LOGIN } from "../../config/endpointapi";
-import Home from "../Home/Home";
+import "./Login.scss";
 
 const Login = () => {
   const [users, setUsers] = useState();
@@ -50,8 +49,8 @@ const Login = () => {
         .post(API_LOGIN, value)
         .then(function (res) {
           if (res.status === 200) {
-            localStorage.setItem("data_user", JSON.stringify(res.data.user));
-            localStorage.setItem("token_user", res.data.access_token);
+            localStorage.setItem("data", JSON.stringify(res.data.user));
+            localStorage.setItem("token", res.data.access_token);
             history.push(HOME);
             toast.success("Đăng nhập thành công", {
               position: "top-center",

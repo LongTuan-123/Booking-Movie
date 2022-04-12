@@ -4,15 +4,12 @@
   height: fit-content;
   &-header {
     width: 100%;
-    height: 80px;
     background-color: #032055;
     color: white;
 
     .container {
-      width: 80%;
       display: flex;
       flex-direction: row;
-      position: relative;
       vertical-align: middle;
     }
     &-icon {
@@ -28,9 +25,6 @@
       padding: 28px;
     }
     &-btn {
-      justify-content: end;
-      position: absolute;
-      right: 0px;
       button {
         background-image: -webkit-linear-gradient(
           169deg,
@@ -38,11 +32,11 @@
           #aa52a1 63%,
           #ff4343 100%
         );
+        text-align: center;
         font-size: 20px;
         width: fit-content;
         padding: 12px 32px;
         border-radius: 32px;
-        justify-content: end;
         color: #000;
       }
     }
@@ -52,18 +46,14 @@
  
     
     .container {
-      width: 80%;
       color: #fff;
-      display: flex;
       justify-content: space-between;
 
     }
     &-security{
-        width: 40%;
         background-color: #032055;
         border-radius: 32px;
         padding: 10px;
-        position: relative;
         form{
   
             .modify-label{
@@ -107,19 +97,14 @@
           width: fit-content;
           padding: 12px 32px;
           border-radius: 32px;
-          justify-content: end;
           color: #000;
-          position: absolute;
-          bottom: 5%;
-          left: 50%;
-          transform: translateX(-50%);
+          margin: 4px;
          
       }      
 }
 
     }
     &-info{
-        width: 40%;
         background-color: #032055;
         border-radius: 32px;
         padding: 10px;

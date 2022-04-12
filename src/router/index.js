@@ -23,7 +23,7 @@ import {
   SIGNUP,
   USER_PROFILE,
 } from "../config/path";
-
+import Loading from "../common/Loading";
 const Login = lazy(() => import("../components/auth/Login"));
 const Signup = lazy(() => import("../components/auth/Signup"));
 const Contact = lazy(() => import("../components/Contact/Contact"));
@@ -41,7 +41,7 @@ const AppRouter = () => {
   }, [token])
 
   return (
-    <Suspense fallback={<div>loading</div>}>
+    <Suspense fallback={<Loading width={1000} height={1000}/>}>
       <Router>
         <Switch>
           <Route
