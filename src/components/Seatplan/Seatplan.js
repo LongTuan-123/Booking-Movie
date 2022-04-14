@@ -73,7 +73,7 @@ const Seatplan = () => {
         (money) => money !== JSON.parse(value).money
       );
       const seatFilter = seatClone.filter(
-        (seat) => seat !== JSON.parse(value).money
+        (seat) => seat?.id !== JSON.parse(value).id
       );
 
       setSelectSeat(seatFilter);

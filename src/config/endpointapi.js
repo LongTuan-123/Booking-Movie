@@ -26,3 +26,8 @@ export const API_BANNER =`${BASE_API}/api/advertise`
 
 //API News
 export const API_NEWS =`${BASE_API}/api/news`
+
+//API Evaluation
+export const API_EVALUATION = `${BASE_API}/api/evaluation`
+export const API_EVALUATION_STORE = `${BASE_API}/api/evaluation/store`
+export const API_EVALUATION_DELETE = `${BASE_API}/api/evaluation/delete/:id`
