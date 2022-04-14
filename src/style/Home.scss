@@ -25,6 +25,11 @@
         color: white;
       }
 
+      .booking_label
+      {
+       display: flex;
+        
+      }
       &-title {
         h2 {
           text-transform: uppercase;
@@ -42,7 +47,7 @@
         }
       }
 
-      .wrap {
+      .select_movie {
         padding: 20px;
         display: flex;
         flex-direction: column;

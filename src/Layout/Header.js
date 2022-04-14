@@ -8,74 +8,107 @@ import {
   HOME,
   LOGIN,
   NEWS,
+  SEAT_PLAN,
   USER_PROFILE,
 } from "../config/path";
+import User from "../asset/user";
+import {
+  Container,
+  Nav,
+  Navbar,
+  NavbarBrand,
+  NavDropdown,
+} from "react-bootstrap";
+import { BiUser } from 'react-icons/bi';
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));
   return (
     <div className="header">
-      {/* <div className="header-container">
-        
-      <Navbar className="header-navbar" sticky="top" edivd="lg" collapseOnSelect>
-        <div className="header-container-left">
+      <div className="header-container bg1">
+        <Navbar expand="lg">
+          <Container>
+            <Navbar.Brand href="#home">
+              <img className="logo-img w-50" src={Logo} />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="d-flex  m-auto">
+                <Nav.Link>
+                  <Link
+                    className="header-navbar-content-right-nav text-light p-4"
+                    to={HOME}
+                  >
+                    Trang chủ
+                  </Link>
+                </Nav.Link>
+                <NavDropdown title="Phim" id="nav-dropdown" className="dropdown">
+                  <NavDropdown.Item>
+                    <Link
+                      className="header-navbar-content-right-nav text-dark"
+                      to={HOME}
+                    >
+                      Phim đang chiếu
+                    </Link>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <Link
+                      className="header-navbar-content-right-nav text-dark"
+                      to={HOME}
+                    >
+                      Phim đang chiếu
+                    </Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
 
-        <NavbarBrand className="header-navbar-brand">
-          <img src={Logo}/>
-        </NavbarBrand>
-        </div>
-        <div className="header-container-right">
-          
-        <Navbar.Toggle/>
-        <Navbar.Collapse className="justify-content-end">
-          <Nav>
-            <Nav.Link className="header-navbar-nav"href={HOME}>
-                Trang chủ
-              </Nav.Link>
-            <NavDropdown title="Phim">
-              <NavDropdown.Item className="header-navbar-nav" >Phim đang chiếu</NavDropdown.Item>
-              <NavDropdown.Item className="header-navbar-nav" >Phim sắp chiếu</NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link className="header-navbar-nav">Khuyến mãi</Nav.Link>
-            <Nav.Link className="header-navbar-nav" href={CONTACT}>Liên hệ</Nav.Link>
-            <Nav.Link className="header-navbar-nav" href={LOGIN}>Đăng nhập</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-        </div>
-      </Navbar>
-
-      </div> */}
-      <div className="header-navbar">
-        <div className="header-navbar-content">
-          <div className="header-navbar-content-left">
-            <img className="logo-img" src={Logo} />
-          </div>
-          <div className="header-navbar-content-right">
-            <Link className="header-navbar-content-right-nav" to={HOME}>
-              Trang chủ
-            </Link>
-            <div className="header-navbar-content-right-nav">
-              Phim đang chiếu
-            </div>
-            <div className="header-navbar-content-right-nav">
-            </div>
-            <Link className="header-navbar-content-right-nav" to={CONTACT}>
-              Liên hệ
-            </Link>
-            <Link className="header-navbar-content-right-nav" to={NEWS}>
-              Tin tức
-            </Link>
-          </div>
-          {user ? (
-            <Link className="header-navbar-content-right-nav" to={USER_PROFILE}>
-              {`${user.first_name} ${user.last_name}`}
-            </Link>
-          ) : (
-            <Link className="header-navbar-content-right-nav-btn" to={LOGIN}>
-              Đăng nhập
-            </Link>
-          )}
-        </div>
+                <Nav.Link>
+                  <Link
+                    className="header-navbar-content-right-nav text-light p-4"
+                    to={CONTACT}
+                  >
+                    Liên hệ
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link
+                    className="header-navbar-content-right-nav text-light p-4"
+                    to={NEWS}
+                  >
+                    Tin tức
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link
+                    className="header-navbar-content-right-nav text-light p-4"
+                    to={SEAT_PLAN}
+                  >
+                    Đặt ghế
+                  </Link>
+                </Nav.Link>
+              </Nav>
+              {user ? (
+                <Nav.Link>
+                  <Link
+                    className="header-navbar-content-right-nav"
+                    to={USER_PROFILE}
+                  >
+                    {`${user.last_name}  ${user.first_name}`}
+                  </Link>
+                </Nav.Link>
+              ) : (
+                <Nav.Link>
+                  <Link className="header-navbar-content-right-nav d-flex" to={LOGIN}>
+                    <BiUser/>
+                    <span>
+                    Đăng nhập
+                    </span>
+                  
+                  </Link>
+                </Nav.Link>
+              )}
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
       </div>
     </div>
   );

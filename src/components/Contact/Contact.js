@@ -5,77 +5,57 @@ import axios from "axios";
 import "../../style/Contact.scss";
 import Navigation from "../../Layout/Navigation";
 import React from "react";
-import GoogleMapReact from 'google-map-react';
+import { API_OPINION_CREATE } from "../../config/endpointapi";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
-    const handleApiLoaded = (map, maps) => {
-        // use map and maps objects
-      };
+  const handleApiLoaded = (map, maps) => {
+    // use map and maps objects
+  };
   const { register, handleSubmit } = useForm();
 
+  const [opinion, setOpinion] = useState({});
+  const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
+  const user_id = {user_id : dataUser}
+  const json = JSON.stringify(user_id);
+
+
+
   const onSubmit = (value) => {
-    console.log(value);
-  };
-  const axios = require("axios").default;
-  const [users, setUsers] = useState();
-  useEffect(() => {
+    value.user_id = dataUser;
+    console.log( value);
     axios
-      .get("https://jsonplaceholder.typicode.com/users", {
-        params: {
-          id: 1,
-        },
-      })
-      .then(function (response) {
-        console.log(response);
+      .post(API_OPINION_CREATE, value)
+      .then(function (res) {
+        console.log(res);
+        alert("Cảm ơn bạn đã gửi phản hồi");
+        toast.success("Cảm ơn bạn đã gửi thông tin", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: 0,
+        });
       })
       .catch(function (error) {
         console.log(error);
       });
-  });
+  };
+
+  console.log(dataUser);
+
   return (
     <Layout>
-        <Navigation/>
+      <Navigation />
       <div className="contact">
         <div className="contact-container">
           <div className="contact-container-left">
             <form className="contact-form" onSubmit={handleSubmit(onSubmit)}>
               <h1 className="contact-maintitle">Thông tin liên hệ </h1>
-              <div className="contact-label">
-                <div className="contact-label-title">
-                  Họ và tên <span>*</span>
-                </div>
-                <div className="contact-form-border">
-                  <input
-                    className="contact-form__input"
-                    placeholder="Nhập tên của bạn"
-                    {...register("name")}
-                  />
-                </div>
-              </div>
-              <div className="contact-label">
-                <div className="contact-label-title">
-                 Số điện thoại <span>*</span>
-                </div>
-                <div className="contact-form-border">
-                  <input
-                    className="contact-form__input"
-                    placeholder="Nhập số điện thoại"
-                    {...register("phone")}
-                  />
-                </div>
-              </div>
-              <div className="contact-label">
-                <div className="contact-label-title">
-                  Địa chỉ <span>*</span>
-                </div>
-                <div className="contact-form-border">
-                  <input
-                    className="contact-form__input"
-                    placeholder="Nhập địa chỉ"
-                    {...register("address")}
-                  />
-                </div>
-              </div>
+
               <div className="contact-label">
                 <div className="contact-label-title">
                   Tiêu đề <span>*</span>
@@ -93,10 +73,13 @@ const Contact = () => {
                   Nội dung <span>*</span>
                 </div>
                 <div className="contact-form-border">
-                  <input
+                  <textarea
+                    rows={5}
+                    showCount
+                    maxLength={1000}
                     className="contact-form__input"
                     placeholder="Nhập nội dung"
-                    {...register("content")}
+                    {...register("detail")}
                   />
                 </div>
               </div>
@@ -108,7 +91,6 @@ const Contact = () => {
             </form>
           </div>
           <div className="contact-container-right">
-              
             <div className="contact-container-right-info">
               <div className="contact-container-right-info-phone">
                 <img src="http://pixner.net/boleto/demo/assets/images/contact/contact01.png" />

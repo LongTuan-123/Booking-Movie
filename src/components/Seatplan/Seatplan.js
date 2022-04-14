@@ -4,7 +4,13 @@ import Navigation from "../../Layout/Navigation";
 import "../../style/Seatplan.scss";
 import { useEffect, useState } from "react";
 import { bindParam } from "../../config/function";
-import { API_ORDER_SEAT, API_SEAT_IN_ROOM, API_TICKET } from "../../config/endpointapi";
+import {
+  API_MOVIES_DETAIL,
+  API_ORDER_SEAT,
+  API_SEAT_IN_ROOM,
+  API_SHOWTIME_DETAIL,
+  API_TICKET,
+} from "../../config/endpointapi";
 import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
 import { LOGIN, PAYMENT } from "../../config/path";
@@ -12,9 +18,9 @@ import { toast, ToastContainer } from "react-toastify";
 
 const Seatplan = () => {
   const { id } = useParams();
-  const [showtime, setShowtime] = useState([])
-  const [ticket, setTicket] = useState([])
-  const [seatSearch] = useState("")
+  const [showtime, setShowtime] = useState([]);
+  const [ticket, setTicket] = useState([]);
+  const [seatSearch] = useState("");
   const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
   const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
   const user = localStorage.getItem("data_user");
@@ -24,36 +30,69 @@ const Seatplan = () => {
   const history = useHistory();
   const [money, setMoney] = useState(0);
   const [seat, setSeat] = useState();
-
+  const [showTimeDetail, setShowTimeDetail] = useState({});
+  const showtimedetail = JSON.parse(localStorage.getItem("@showtime"));
+  const [movieDetail, setMovieDetail] = useState({});
+  const [room,setRoom]=useState({});
   for (var i = 1; i <= 10; i++) {
     row.push(i);
   }
 
   useEffect(() => {
     const getTicket = async () => {
-      const params = { limit: 1000, seat: seatSearch, page: 1, keyword: localStorage.getItem("@showtime") }
-      await axios.get(API_TICKET, {params})
-        .then(res => {
-          setShowtime(res?.data?.data?.data)
-        })
-    }
+      const params = {
+        limit: 1000,
+        seat: seatSearch,
+        page: 1,
+        keyword: localStorage.getItem("@showtime"),
+      };
+      await axios.get(API_TICKET, { params }).then((res) => {
+        setShowtime(res?.data?.data?.data);
+      });
+    };
 
-    getTicket()
-  }, [])
+    getTicket();
+  }, []);
 
   useEffect(() => {
-    if(showtime) {
-      showtime?.map(showT => {
-        setTicket((prev) => [...prev, showT?.seat?.id])
-      })
+    if (showtime) {
+      showtime?.map((showT) => {
+        setTicket((prev) => [...prev, showT?.seat?.id]);
+      });
     }
-  }, [showtime])
+  }, [showtime]);
+
+  useEffect(() => {
+    const getShowTimeDetail = async () => {
+      await axios
+        .get(bindParam(API_SHOWTIME_DETAIL, { id: showtimedetail }))
+        .then((res) => {
+          setShowTimeDetail(res?.data?.data);
+          setMovieDetail(res?.data?.data?.movie);
+          setRoom(res?.data?.data?.room);
+          console.log(movieDetail);
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getShowTimeDetail();
+  }, []);
+  
+
 
   useEffect(() => {
     const getSeat = async () => {
-      await axios.get(bindParam(API_SEAT_IN_ROOM, { id })).then((res) => {
-        setSeat(res?.data?.data);
-      });
+      await axios
+        .get(bindParam(API_SEAT_IN_ROOM, { id }))
+        .then((res) => {
+          setSeat(res?.data?.data);
+       
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     getSeat();
@@ -65,12 +104,13 @@ const Seatplan = () => {
       setSelectSeat((prev) => [...prev, JSON.parse(value)]);
       setMoneyDetail((prev) => [...prev, JSON.parse(value).money]);
       setMoney(money + JSON.parse(value).money);
+      console.log(selectSeat);
     } else {
       const seatClone = [...selectSeat];
       const moneyClone = [...moneyDetail];
 
       const moneyFilter = moneyClone.filter(
-        (money) => money !== JSON.parse(value).money
+        (money) => money !== JSON.parse(value).money,
       );
       const seatFilter = seatClone.filter(
         (seat) => seat?.id !== JSON.parse(value).id
@@ -122,9 +162,15 @@ const Seatplan = () => {
       />
       <div className="seatplan">
         <div className="seatplan-title">
-          <div className="seatplan-title-label">Phòng chiếu</div>
-          <div className="seatplan-title-label">Giờ chiếu</div>
-          <div className="seatplan-title-label">Phim</div>
+          <div className="seatplan-title-label">
+            Phòng chiếu <br /> {room.name}
+          </div>
+          <div className="seatplan-title-label">
+            Giờ chiếu <br /> {showTimeDetail.show_time}
+          </div>
+          <div className="seatplan-title-label">
+            Phim <br /> {movieDetail.name}
+          </div>
           <div className="seatplan-title-label">Số ghế</div>
           <div className="seatplan-title-label">
             Time left
@@ -154,7 +200,7 @@ const Seatplan = () => {
                         <input
                           onChange={onSelectSeat}
                           className="checkseat"
-                          checked={ticket.includes(se?.id) ? true: null}
+                          checked={ticket.includes(se?.id) ? true : null}
                           value={JSON.stringify(se)}
                           type="checkbox"
                         />
@@ -177,7 +223,9 @@ const Seatplan = () => {
         </div>
         <div className="seatplan-proceed">
           <div className="container">
-            <div className="seatplan-proceed-seat">Ghế đã chọn</div>
+            <div className="seatplan-proceed-seat">
+              Ghế đã chọn: {selectSeat.row}
+            </div>
             <div className="seatplan-proceed-price">Tổng tiền: {money}</div>
             <div className="seatplan-proceed-btn">
               <button type="submit" onClick={handlePayment}>

@@ -1,4 +1,56 @@
 .payment {
-	width: fit-content;
+	width: 70%;
   margin: auto;
+  padding: 10px;
+  &-detail{
+    display: flex;
+
+    border: 4px #000 dashed;
+    padding: 10px;
+    border-radius: 12px;
+    &-title{
+      text-align: center;
+      font-family: 'Futurab';
+      font-weight: normal;
+      font-size: 36px;
+      color: #e00d7a;
+      line-height: 50px;
+      text-transform: uppercase;
+      text-shadow: 4px 4px 0 rgb(0 0 0 / 10%);
+      font-weight: 600;
+      padding: 20px;
+      
+    }
+    &-left{
+      width: 50%;
+      &-label{
+        font-size: 1.2em;
+        font-weight: 700;
+        text-align: center;
+        
+      }
+      &-info{
+        font-size: 1em;
+        color: gray;
+        
+      }
+    }
+    &-right{
+      width: 50%;
+      img{
+        width: 100%;
+      }
+    }
+  }
+  &-tool{
+    button{
+      display: block;
+      background-color: #007bff;;
+      border-radius :50px;
+      padding: 12px;
+      color: #fff;
+      margin: auto;
+      
+    }
+  }
 }

@@ -47,7 +47,6 @@ const Home = () => {
         .get(API_BANNER, { params })
         .then((res) => {
           setBanner(res?.data?.data?.data);
-          console.log(banner);
         })
         .catch((err) => {
           console.log(err);
@@ -63,6 +62,7 @@ const Home = () => {
         .get(API_SHOWTIME, { params })
         .then((res) => {
           setMovies(res?.data?.data?.data);
+          // console.log(movies);
         })
         .catch((err) => {
           console.log(err);
@@ -78,6 +78,7 @@ const Home = () => {
         .get(API_SHOWTIME_TIME, { params })
         .then((res) => {
           setMovieSelectTime(res?.data?.data);
+          // console.log(movieSelectTime);
         })
         .catch((err) => {
           console.log(err);
@@ -92,6 +93,7 @@ const Home = () => {
       movieSelectTime?.map((movies) => {
         if (!movieSelectClone?.includes(movies?.show_time)) {
           movieSelectClone.push(movies?.show_time);
+          console.log(movies?.show_time);
           setTimeBaseOnDate(movieSelectClone);
         }
       });
@@ -117,6 +119,7 @@ const Home = () => {
     const { room, id } = showtime;
     history.push(bindParam(SEAT_PLAN, { id: room.id }));
     localStorage.setItem("@showtime", id);
+    
   };
 
   const handleDate = (e) => {
@@ -149,12 +152,14 @@ const Home = () => {
         </Carousel>
 
         <div className="home-snapbook">
-          <div className="container">
+          <div className="container row">
+            <div className="booking_label col-sm-12 col-lg-3">         
             <img src="https://cinestar.com.vn/catalog/view/theme/default/images/icon-ticket.png" />
             <div className="container-title">
               <h2>Đặt vé Online</h2>
             </div>
-            <div className="wrap">
+            </div>
+            <div className="select_movie col-sm-12 col-lg-3">
               <span className="container_input__title">Chọn phim</span>
               <select
                 defaultValue={"- Vui lòng chọn bộ phim -"}
@@ -168,7 +173,7 @@ const Home = () => {
                 })}
               </select>
             </div>
-            <div className="select_date">
+            <div className="select_date col-sm-12 col-lg-3">
               <span className="container_input__title">Chọn ngày</span>
               <input
                 min={moment().format("YYYY-MM-DD")}
@@ -177,7 +182,7 @@ const Home = () => {
                 defaultValue={moment().format("YYYY-MM-DD")}
               />
             </div>
-            <div className="select_time">
+            <div className="select_time col-sm-12 col-lg-3">
               <span className="container_input__title">Chọn thời gian</span>
               <select
                 defaultValue={"- Vui lòng chọn giờ chiếu -"}

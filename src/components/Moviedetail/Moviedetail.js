@@ -23,6 +23,9 @@ import moment from "moment";
 const Moviedetail = () => {
   const { id } = useParams();
   const [stars, setStars] = useState(0);
+  const [date, setDate] = useState(new Date());
+  const [movies, setMovies] = useState([]);
+  const [comment, setComment] = useState("");
   const [data, setData] = useState({});
   const [status, setStatus] = useState(false);
   const [query, setQuery] = useState(false);
@@ -30,7 +33,6 @@ const Moviedetail = () => {
   const [limit, setLimit] = useState(1000);
   const [keyword] = useState(id);
   const [page] = useState(1);
-  const [comment, setComment] = useState([]);
   const history = useHistory();
   const { register, handleSubmit } = useForm();
 
@@ -81,6 +83,7 @@ const Moviedetail = () => {
         .get(bindParam(API_MOVIES_DETAIL, { id }))
         .then((res) => {
           setData(res?.data?.data);
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);
