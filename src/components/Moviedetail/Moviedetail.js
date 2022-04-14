@@ -19,13 +19,14 @@ import { bindParam } from "../../config/function";
 import { SEAT_PLAN } from "../../config/path";
 import ReactStars from "react-stars";
 import moment from "moment";
+import { getToken } from "../../Http";
 
 const Moviedetail = () => {
   const { id } = useParams();
   const [stars, setStars] = useState(0);
   const [date, setDate] = useState(new Date());
   const [movies, setMovies] = useState([]);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState([]);
   const [data, setData] = useState({});
   const [status, setStatus] = useState(false);
   const [query, setQuery] = useState(false);
@@ -63,6 +64,7 @@ const Moviedetail = () => {
 
   useEffect(() => {
     const getData = async () => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       const params = { limit, page, keyword };
       await axios
         .get(API_EVALUATION, { params })

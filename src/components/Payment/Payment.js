@@ -14,6 +14,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { HOME, SEAT_PLAN } from "../../config/path";
 import { bindParam } from "../../config/function";
 import moment from "moment";
+import { getToken } from "../../Http";
 
 const currency = "USD";
 const Payment = () => {
@@ -68,6 +69,7 @@ const Payment = () => {
 
   useEffect(() => {
     const deleteData = async () => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       await axios
         .post(API_DELETE_SEAT, {
           id_count: ticketID?.join(","),
@@ -104,6 +106,7 @@ const Payment = () => {
   }, []);
 
   const handleAccept = async () => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     await axios
       .post(API_PAY_SEAT, {
         confirm: 1,

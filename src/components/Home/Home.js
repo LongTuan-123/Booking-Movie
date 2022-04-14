@@ -72,6 +72,7 @@ const Home = () => {
   }, [limit, page, keyword, time, date]);
 
   useEffect(() => {
+    
     const getShowtime = async () => {
       const params = { date };
       await axios
