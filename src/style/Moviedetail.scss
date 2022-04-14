@@ -5,6 +5,20 @@
   background-color: #032055;
   height: fit-content;
 
+  &__comment {
+    width: 60%;
+    margin: auto;
+    padding: 20px 0px;
+    &-title {
+      font-size: 30px;
+      border-bottom: 3px solid black;
+    }
+    &-content {
+      padding: 10px 0px;
+      
+    }
+  }
+
   &-background {
     top: 0px;
     width: 100%;
@@ -169,6 +183,14 @@
       margin: auto;
       display: flex;
       flex-direction: column;
+
+      &-uncomment{
+        margin-top: 30px;
+        font-size: 30px;
+        font-weight: 600;
+        text-align: center;
+      }
+
       &-label {
         width: 100%;
         font-size: 30px;
@@ -178,6 +200,7 @@
         padding: 20px;
         width: 100%;
         border-radius: 40px;
+        color: #000
       }
       &-btn {
         width: 60%;

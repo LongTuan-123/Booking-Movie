@@ -27,10 +27,11 @@ export const API_BANNER =`${BASE_API}/api/advertise`
 
 //API News
 export const API_NEWS =`${BASE_API}/api/news`
+
+//API Evaluation
+export const API_EVALUATION = `${BASE_API}/api/evaluation`
+export const API_EVALUATION_STORE = `${BASE_API}/api/evaluation/store`
+export const API_EVALUATION_DELETE = `${BASE_API}/api/evaluation/delete/:id`
  
 //API opinion
 export const API_OPINION_CREATE =`${BASE_API}/api/opinion/store`
-
-//API evaluation
-export const API_LIST_EVALUATION =`${BASE_API}/api/evaluation`
-export const API_EVALUATION =` ${BASE_API}/api/evaluation/store`
