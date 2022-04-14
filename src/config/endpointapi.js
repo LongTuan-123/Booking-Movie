@@ -7,6 +7,7 @@ export const API_USER_PROFILE =`${BASE_API}/api/auth/user-profile`
 // API Showtime 
 export const API_SHOWTIME = `${BASE_API}/api/showtime`
 export const API_SHOWTIME_TIME = `${BASE_API}/api/showtime/gettime`
+export const API_SHOWTIME_DETAIL= `${BASE_API}/api/showtime/:id`
 
 // API Seat
 export const API_SEAT_IN_ROOM = `${BASE_API}/api/seat/in_room/:id`
@@ -26,3 +27,10 @@ export const API_BANNER =`${BASE_API}/api/advertise`
 
 //API News
 export const API_NEWS =`${BASE_API}/api/news`
+ 
+//API opinion
+export const API_OPINION_CREATE =`${BASE_API}/api/opinion/store`
+
+//API evaluation
+export const API_LIST_EVALUATION =`${BASE_API}/api/evaluation`
+export const API_EVALUATION =` ${BASE_API}/api/evaluation/store`

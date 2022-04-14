@@ -92,17 +92,6 @@ const Signup = () => {
               </div>
               {errors.age && <span>Age is required</span>}
             </div>
-            {/* <div className="signup-col2-label">
-            <div className="signup-col2-label-name">
-              Giới tính <span>*</span>
-            </div>
-            <select className="signup-form__select" {...register("gender")}>
-              <option value="female">Nữ</option>
-              <option value="male">Nam</option>
-              <option value="other">Khác</option>
-            </select>
-            {errors.gender && <span>Lựa chọn giới tính</span>}
-          </div> */}
           </div>
           <div className="signup-label">
             <div className="signup-label-name">

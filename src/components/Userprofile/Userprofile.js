@@ -13,8 +13,8 @@ import { HOME } from "../../config/path";
 
 
 const Userprofile = () => {
-  const user = JSON.parse(localStorage.getItem("data"));
-  const [token] = useState(localStorage.getItem("token"));
+  const user = JSON.parse(localStorage.getItem("data_user"));
+  const [token] = useState(localStorage.getItem("token_user"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   console.log(user);

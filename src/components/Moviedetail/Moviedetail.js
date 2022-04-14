@@ -19,6 +19,7 @@ const Moviedetail = () => {
   const [date, setDate] = useState(new Date());
   const [movies, setMovies] = useState([]);
   const [comment, setComment] = useState("");
+  const [star,setStar]= useState("");
   const [data, setData] = useState({});
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState();
@@ -31,9 +32,11 @@ const Moviedetail = () => {
     console.log(value);
   };
   const ratingChanged = (newRating) => {
-    alert(`Bạn đã đánh ${newRating} giá sao`)
+ 
+
   }
     const onNofication=(newRating)=>{
+      alert(`Bạn đã đánh ${newRating} giá sao`)
       toast.success(`Bạn đã đánh ${newRating} giá`, {
         position: "top-center",
         autoClose: 5000,
@@ -65,6 +68,7 @@ const Moviedetail = () => {
         .get(bindParam(API_MOVIES_DETAIL, { id }))
         .then((res) => {
           setData(res?.data?.data);
+          console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -140,7 +144,7 @@ const Moviedetail = () => {
                     key={time?.id}
                     className="movieDetail-content-time-listtime"
                   >
-                    {time?.showtime}
+                    {time?.show_time}
                   </span>
                 );
               })}
