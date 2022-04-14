@@ -41,7 +41,7 @@ const AppRouter = () => {
   }, [token])
 
   return (
-    <Suspense fallback={<Loading width={1000} height={1000}/>}>
+    <Suspense fallback={<Loading width="1000" height="1000"/>}>
       <Router>
         <Switch>
           <Route

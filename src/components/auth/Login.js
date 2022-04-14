@@ -49,8 +49,8 @@ const Login = () => {
         .post(API_LOGIN, value)
         .then(function (res) {
           if (res.status === 200) {
-            localStorage.setItem("data", JSON.stringify(res.data.user));
-            localStorage.setItem("token", res.data.access_token);
+            localStorage.setItem("data_user", JSON.stringify(res.data.user));
+            localStorage.setItem("token_user", res.data.access_token);
             history.push(HOME);
             toast.success("Đăng nhập thành công", {
               position: "top-center",
