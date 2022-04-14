@@ -15,6 +15,7 @@ import { useHistory, useParams } from "react-router-dom";
 import moment from "moment";
 import { LOGIN, PAYMENT } from "../../config/path";
 import { toast, ToastContainer } from "react-toastify";
+import { getToken } from "../../Http";
 
 const Seatplan = () => {
   const { id } = useParams();
@@ -40,6 +41,7 @@ const Seatplan = () => {
 
   useEffect(() => {
     const getTicket = async () => {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       const params = {
         limit: 1000,
         seat: seatSearch,
@@ -124,6 +126,7 @@ const Seatplan = () => {
 
   const handlePayment = () => {
     if (dataUser && user) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       axios
         .post(API_ORDER_SEAT, {
           seats: selectSeat.map((seat) => seat.id).join(","),

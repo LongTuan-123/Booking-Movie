@@ -9,18 +9,17 @@ import { useForm } from "react-hook-form";
 import { API_LOGOUT } from "../../config/endpointapi";
 import { useHistory } from "react-router-dom";
 import { HOME } from "../../config/path";
+import { getToken } from "../../Http";
 
 
 
 const Userprofile = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));
-  const [token] = useState(localStorage.getItem("token_user"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
   console.log(user);
   const onLogout = () => {
-    axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-    console.log(token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     axios
       .post(API_LOGOUT)
       .then(function (res) {
@@ -33,8 +32,8 @@ const Userprofile = () => {
           draggable: true,
           progress: 0,
         });
-        localStorage.removeItem("data");
-        localStorage.removeItem("token");
+        localStorage.removeItem("data_user");
+        localStorage.removeItem("token_user");
         history.push(HOME);
       })
       .catch(function (error) {
