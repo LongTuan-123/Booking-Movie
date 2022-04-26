@@ -8,14 +8,18 @@
   &__comment {
     width: 60%;
     margin: auto;
-    padding: 20px 0px;
+    padding: 40px 0px;
+
     &-title {
       font-size: 30px;
-      border-bottom: 3px solid black;
+      border-top: 2px solid #ccc;
+      border-bottom: 2px solid #ccc;
+      padding: 10px 0px;
     }
+
     &-content {
       padding: 10px 0px;
-      
+
     }
   }
 
@@ -29,12 +33,14 @@
     z-index: 0;
     opacity: 0.2;
   }
+
   &-name {
     font-size: 40px;
     text-align: center;
     padding: 20px;
     text-transform: uppercase;
   }
+
   &-content {
     display: flex;
     flex-direction: column;
@@ -47,15 +53,19 @@
       width: 100%;
       display: flex;
       flex-direction: row;
+
       &-img {
         padding: 0px 20px;
       }
+
       &-right {
         justify-content: center;
         font-size: 14px;
+
         &-warn {
           display: flex;
           flex-direction: row;
+
           &-kind {
             padding: 2px 10px;
             width: fit-content;
@@ -63,12 +73,14 @@
             margin-right: 20px;
             text-align: center;
           }
+
           &-age {
             padding: 2px 10px;
             width: fit-content;
             border: 1px solid rgba(255, 255, 255, 0.16);
           }
         }
+
         &-duration,
         &-actor,
         &-category,
@@ -82,24 +94,26 @@
           box-shadow: 0px 0px 29.4px 0.6px #000;
         }
       }
+
       &-left {
         justify-content: center;
       }
     }
+
     &-ver2 {
       width: 100%;
       display: flex;
       flex-direction: row;
+
       &-button {
         width: 20%;
         text-align: center;
+
         &-btn {
-          background-image: -webkit-linear-gradient(
-            169deg,
-            #5560ff 17%,
-            #aa52a1 63%,
-            #ff4343 100%
-          );
+          background-image: -webkit-linear-gradient(169deg,
+              #5560ff 17%,
+              #aa52a1 63%,
+              #ff4343 100%);
           font-size: 20px;
           width: fit-content;
           padding: 20px 48px;
@@ -108,13 +122,16 @@
           color: #fff;
         }
       }
+
       &-description {
         padding: 20px;
+
         span {
           font-size: 24px;
         }
       }
     }
+
     &-time {
       width: 100%;
       background-color: #032055;
@@ -123,6 +140,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+
       &-label {
         width: 30%;
         text-align: center;
@@ -130,16 +148,19 @@
         padding: 20px;
         color: #31b8d7;
       }
+
       .calender {
         width: 30%;
         padding: 16px;
         text-align: center;
+
         input {
           width: 60%;
           border-radius: 20px;
           text-align: center;
         }
       }
+
       .list {
         width: 40%;
         display: flex;
@@ -147,11 +168,13 @@
         text-align: center;
         align-items: center;
       }
+
       .booking {
         width: 30%;
         color: red;
         text-align: center;
       }
+
       &-listtime {
         width: fit-content;
         padding: 8px;
@@ -160,31 +183,32 @@
         margin: 10px;
         justify-content: center;
       }
+
       &-listtime:hover {
-        background-image: -webkit-linear-gradient(
-          169deg,
-          #5560ff 17%,
-          #aa52a1 63%,
-          #ff4343 100%
-        );
+        background-image: -webkit-linear-gradient(169deg,
+            #5560ff 17%,
+            #aa52a1 63%,
+            #ff4343 100%);
         cursor: pointer;
         color: #000;
       }
     }
   }
+
   &-comment {
     width: 100%;
     background-color: #001232;
     z-index: 3;
     margin: auto;
     position: relative;
+
     &-form {
       width: 60%;
       margin: auto;
       display: flex;
       flex-direction: column;
 
-      &-uncomment{
+      &-uncomment {
         margin-top: 30px;
         font-size: 30px;
         font-weight: 600;
@@ -196,12 +220,14 @@
         font-size: 30px;
         padding: 20px;
       }
+
       &-input {
         padding: 20px;
         width: 100%;
         border-radius: 40px;
         color: #000
       }
+
       &-btn {
         width: 60%;
         justify-content: flex-end;
@@ -209,12 +235,10 @@
         button {
           width: 100px;
           text-align: center;
-          background-image: -webkit-linear-gradient(
-            169deg,
-            #5560ff 17%,
-            #aa52a1 63%,
-            #ff4343 100%
-          );
+          background-image: -webkit-linear-gradient(169deg,
+              #5560ff 17%,
+              #aa52a1 63%,
+              #ff4343 100%);
           border-radius: 30px;
           padding: 12px;
           margin: 10px;

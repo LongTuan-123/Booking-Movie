@@ -19,7 +19,6 @@ import { bindParam } from "../../config/function";
 import { SEAT_PLAN } from "../../config/path";
 import ReactStars from "react-stars";
 import moment from "moment";
-import { getToken } from "../../Http";
 
 const Moviedetail = () => {
   const { id } = useParams();
@@ -64,7 +63,6 @@ const Moviedetail = () => {
 
   useEffect(() => {
     const getData = async () => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
       const params = { limit, page, keyword };
       await axios
         .get(API_EVALUATION, { params })
@@ -175,27 +173,6 @@ const Moviedetail = () => {
             </div>
           </div>
         </div>
-        <div className="movieDetail__comment">
-          <div className="movieDetail__comment-title">
-            Nhận xét của người xem
-          </div>
-          {comment?.map((com) => {
-            return (
-              <div className="movieDetail__comment-content">
-                <h3>
-                  {com?.user?.first_name} {com?.user?.last_name}
-                </h3>
-                <ReactStars
-                  count={5}
-                  value={com?.stars}
-                  size={20}
-                  color2={"#ffd700"}
-                />
-                <p>{com?.comment}</p>
-              </div>
-            );
-          })}
-        </div>
         <div className="movieDetail-comment">
           <form
             className="movieDetail-comment-form"
@@ -215,14 +192,38 @@ const Moviedetail = () => {
             <input
               type="text"
               className="movieDetail-comment-form-input"
-              placeholder={ status !== true ? "Nhập bình luận": "Bạn đã bình luận rồi"}
+              placeholder={
+                status !== true ? "Nhập bình luận" : "Bạn đã bình luận rồi"
+              }
               disabled={!!status}
               {...register("comment")}
             />
             <div className="movieDetail-comment-form-btn">
-              <button type="submit" disabled={!!status}>Gửi</button>
+              <button type="submit" disabled={!!status}>
+                Gửi
+              </button>
             </div>
           </form>
+          <div className="movieDetail__comment">
+            <div className="movieDetail__comment-title">Các bình luận khác</div>
+            {comment?.map((com) => {
+              return (
+                <div className="movieDetail__comment-content">
+                  {console.log(com?.user)}
+                  <h3>
+                    {com?.user?.first_name} {com?.user?.last_name}
+                  </h3>
+                  <ReactStars
+                    count={5}
+                    value={com?.stars}
+                    size={20}
+                    color2={"#ffd700"}
+                  />
+                  <p>{com?.comment}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </Layout>

@@ -108,7 +108,7 @@
 
     &-content {
       width: 100%;
-      background-color: #032055;
+      background-image: url("https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/movie-details-bg.jpg");
       margin: auto;
       text-align: center;
       text-transform: uppercase;
@@ -131,7 +131,7 @@
       }
 
       .container {
-        width: 80%;
+        width: 100%;
 
         &__no-movies {
           margin: 150px 0px;
@@ -140,11 +140,11 @@
       }
 
       &-image {
-        width: 200px;
+        width:fit-content;
         color: #fff;
         text-align: center;
         text-transform: uppercase;
-        background-color: #032055;
+        // background-image: url("https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/movie-details-bg.jpg");
         position: relative;
         margin: 20px;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -153,7 +153,8 @@
         img {
           padding-bottom: 20px;
           margin: auto;
-          height: 400px;
+          height: 480px;
+          width: 100px;
           z-index: 0;
         }
 
@@ -170,7 +171,7 @@
           justify-content: center;
           color: #fff;
           display: none;
-          width: 50%;
+          width: 40%;
           margin: auto;
           z-index: 2;
           left: 0px;
@@ -216,13 +217,16 @@
 
         &-background {
           position: absolute;
-          bottom: 0px;
+          bottom: 8%;
+          display: none;
+          margin: auto;
           background-color: rgb(10, 30, 94);
           opacity: 0.6;
-          height: 70%;
-          width: 100%;
-          display: none;
+          height: 50%;
+          width: 50%;
+          left: 25%;
           z-index: 1;
+          overflow: hidden;
         }
 
         &:hover {

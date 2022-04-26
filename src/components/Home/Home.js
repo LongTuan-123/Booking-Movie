@@ -62,7 +62,7 @@ const Home = () => {
         .get(API_SHOWTIME, { params })
         .then((res) => {
           setMovies(res?.data?.data?.data);
-          // console.log(movies);
+          console.log(movies);
         })
         .catch((err) => {
           console.log(err);
@@ -72,14 +72,13 @@ const Home = () => {
   }, [limit, page, keyword, time, date]);
 
   useEffect(() => {
-    
     const getShowtime = async () => {
       const params = { date };
       await axios
         .get(API_SHOWTIME_TIME, { params })
         .then((res) => {
           setMovieSelectTime(res?.data?.data);
-          // console.log(movieSelectTime);
+          console.log(movieSelectTime);
         })
         .catch((err) => {
           console.log(err);
@@ -120,7 +119,6 @@ const Home = () => {
     const { room, id } = showtime;
     history.push(bindParam(SEAT_PLAN, { id: room.id }));
     localStorage.setItem("@showtime", id);
-    
   };
 
   const handleDate = (e) => {
@@ -130,6 +128,7 @@ const Home = () => {
 
   const handleTime = (e) => {
     setTime(e.target.value);
+    console.log(time);
   };
 
   const handleKeyword = (e) => {
@@ -154,11 +153,11 @@ const Home = () => {
 
         <div className="home-snapbook">
           <div className="container row">
-            <div className="booking_label col-sm-12 col-lg-3">         
-            <img src="https://cinestar.com.vn/catalog/view/theme/default/images/icon-ticket.png" />
-            <div className="container-title">
-              <h2>Đặt vé Online</h2>
-            </div>
+            <div className="booking_label col-sm-12 col-lg-3">
+              <img src="https://cinestar.com.vn/catalog/view/theme/default/images/icon-ticket.png" />
+              <div className="container-title">
+                <h2>Đặt vé Online</h2>
+              </div>
             </div>
             <div className="select_movie col-sm-12 col-lg-3">
               <span className="container_input__title">Chọn phim</span>
