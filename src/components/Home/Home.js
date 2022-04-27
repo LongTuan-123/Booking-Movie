@@ -40,6 +40,7 @@ const Home = () => {
   const switchDetail = (id) => {
     history.push(bindParam(MOVIE_DETAIL, { id }));
   };
+  
   useEffect(() => {
     const getBanner = async () => {
       const params = { limit, page, keyword };
@@ -62,7 +63,6 @@ const Home = () => {
         .get(API_SHOWTIME, { params })
         .then((res) => {
           setMovies(res?.data?.data?.data);
-          console.log(movies);
         })
         .catch((err) => {
           console.log(err);
@@ -78,7 +78,6 @@ const Home = () => {
         .get(API_SHOWTIME_TIME, { params })
         .then((res) => {
           setMovieSelectTime(res?.data?.data);
-          console.log(movieSelectTime);
         })
         .catch((err) => {
           console.log(err);
@@ -87,6 +86,7 @@ const Home = () => {
     getShowtime();
   }, [date]);
 
+  
   useEffect(() => {
     if (movieSelectTime) {
       let movieSelectClone = [];
@@ -107,13 +107,11 @@ const Home = () => {
         console.log(movies?.movie?.name);
         if (!movieSelectClone?.includes(movies?.movie?.name)) {
           movieSelectClone.push(movies?.movie?.name);
-          setMovieSelect(movieSelect);
+          setMovieSelect(movieSelectClone);
         }
       });
     }
   }, [movieSelectTime]);
-
-  console.log(movieSelect);
 
   const handleSwitchTicket = (showtime) => {
     const { room, id } = showtime;
@@ -132,8 +130,11 @@ const Home = () => {
   };
 
   const handleKeyword = (e) => {
+    console.log(e.target.value)
     setKeyword(e.target.value);
   };
+
+  console.log(movieSelect)
   return (
     <Layout>
       <div className="home">
@@ -168,6 +169,9 @@ const Home = () => {
                 <option style={{ display: "none" }}>
                   -Vui lòng chọn bộ phim-
                 </option>
+                <option value={''}>
+                  Toàn bộ bộ phim
+                </option>
                 {movieSelect?.map((movie) => {
                   return <option value={movie}>{movie}</option>;
                 })}
@@ -190,6 +194,9 @@ const Home = () => {
               >
                 <option style={{ display: "none" }}>
                   -Vui lòng chọn giờ chiếu-
+                </option>
+                <option value={''}>
+                  Toàn bộ thời gian
                 </option>
                 {timeBaseOnDate?.map((time) => {
                   return <option value={time}>{time}</option>;
