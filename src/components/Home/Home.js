@@ -10,6 +10,7 @@ import { MOVIE_DETAIL, SEAT_PLAN } from "../../config/path";
 import Slider from "react-slick";
 import {
   API_BANNER,
+  API_MOVIES,
   API_SHOWTIME,
   API_SHOWTIME_TIME,
 } from "../../config/endpointapi";
@@ -24,6 +25,7 @@ const Home = () => {
   const [movieSelectTime, setMovieSelectTime] = useState([]);
   const [banner, setBanner] = useState([]);
   const [movieSelect, setMovieSelect] = useState([]);
+  const [listMovies, setListMovies] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [page] = useState(1);
   const history = useHistory();
@@ -36,11 +38,43 @@ const Home = () => {
     centerPadding: "20px",
     slidesToShow: movies?.length > 1 ? (movies?.length > 2 ? 3 : 2) : 1,
   };
+  const settingListMovies = {
+    className: "center",
+    centerMode: true,
+    infinite: true,
+    slidesToScroll: 1,
+    centerPadding: "20px",
+    slidesToShow: 3,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settingListMovies: {
+          className: "center",
+          centerMode: true,
+          infinite: true,
+          slidesToScroll: 1,
+          centerPadding: "20px",
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 600,
+        settingListMovies: {
+          className: "center",
+          centerMode: true,
+          infinite: true,
+          slidesToScroll: 1,
+          centerPadding: "20px",
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
 
   const switchDetail = (id) => {
     history.push(bindParam(MOVIE_DETAIL, { id }));
   };
-  
+
   useEffect(() => {
     const getBanner = async () => {
       const params = { limit, page, keyword };
@@ -48,12 +82,28 @@ const Home = () => {
         .get(API_BANNER, { params })
         .then((res) => {
           setBanner(res?.data?.data?.data);
+          console.log(banner);
         })
         .catch((err) => {
           console.log(err);
         });
     };
     getBanner();
+  }, [limit, page, keyword]);
+  useEffect(() => {
+    const getListMovies = async () => {
+      const params = { limit, page, keyword };
+      await axios
+        .get(API_MOVIES, { params })
+        .then((res) => {
+          setListMovies(res?.data?.data?.data);
+          console.log(listMovies);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getListMovies();
   }, [limit, page, keyword]);
 
   useEffect(() => {
@@ -86,14 +136,13 @@ const Home = () => {
     getShowtime();
   }, [date]);
 
-  
   useEffect(() => {
     if (movieSelectTime) {
       let movieSelectClone = [];
       movieSelectTime?.map((movies) => {
         if (!movieSelectClone?.includes(movies?.show_time)) {
           movieSelectClone.push(movies?.show_time);
-          console.log(movies?.show_time);
+          // console.log(movies?.show_time);
           setTimeBaseOnDate(movieSelectClone);
         }
       });
@@ -126,15 +175,15 @@ const Home = () => {
 
   const handleTime = (e) => {
     setTime(e.target.value);
-    console.log(time);
+    // console.log(time);
   };
 
   const handleKeyword = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setKeyword(e.target.value);
   };
 
-  console.log(movieSelect)
+  console.log(movieSelect);
   return (
     <Layout>
       <div className="home">
@@ -169,9 +218,7 @@ const Home = () => {
                 <option style={{ display: "none" }}>
                   -Vui lòng chọn bộ phim-
                 </option>
-                <option value={''}>
-                  Toàn bộ bộ phim
-                </option>
+                <option value={""}>Toàn bộ bộ phim</option>
                 {movieSelect?.map((movie) => {
                   return <option value={movie}>{movie}</option>;
                 })}
@@ -195,9 +242,7 @@ const Home = () => {
                 <option style={{ display: "none" }}>
                   -Vui lòng chọn giờ chiếu-
                 </option>
-                <option value={''}>
-                  Toàn bộ thời gian
-                </option>
+                <option value={""}>Toàn bộ thời gian</option>
                 {timeBaseOnDate?.map((time) => {
                   return <option value={time}>{time}</option>;
                 })}
@@ -207,7 +252,9 @@ const Home = () => {
         </div>
         <div className="home-grid">
           <div className="home-grid-content ">
-            <div className="home-grid-content-title">Phim đang chiếu</div>
+            <div className="home-grid-content-title">
+              Danh sách suất chiếu chiếu
+            </div>
             <div className="container">
               {movies.length === 0 && (
                 <div className="container__no-movies">
@@ -219,7 +266,7 @@ const Home = () => {
                   return (
                     <div className="home-grid-content-image" key={m.id}>
                       <img
-                        style={{ width: movies?.length > 2 ? "70%" : "50%" }}
+                        style={{ width: 360 }}
                         src={m?.movie?.poster}
                         alt={m?.movie?.name}
                       />
@@ -227,10 +274,10 @@ const Home = () => {
                       <span>{m?.movie?.name}</span>
                       <div className="home-grid-content-image-hover">
                         <div
-                          onClick={() => switchDetail(m?.movie?.id)}
-                          className="home-grid-content-image-hover-detail"
+                          className="home-grid-content-image-hover-booking"
+                          onClick={() => handleSwitchTicket(m)}
                         >
-                          Chi tiết
+                          Đặt vé
                         </div>
                         <div className="home-grid-content-image-hover-info">
                           <span>Thể loại: {m?.movie?.type_of_movie}</span>
@@ -238,11 +285,38 @@ const Home = () => {
                             Thời lượng: {m?.movie?.range_of_movie} phút
                           </span>
                         </div>
+                      </div>
+                      <div className="home-grid-content-image-background"></div>
+                    </div>
+                  );
+                })}
+              </Slider>
+            </div>
+          </div>
+          <div className="home-grid-content ">
+            <div className="home-grid-content-title">Danh sách phim</div>
+            <div className="container">
+              <Slider {...settingListMovies}>
+                {listMovies.map((list) => {
+                  return (
+                    <div className="home-grid-content-image" key={list.id}>
+                      <img
+                        style={{ width: 360 }}
+                        src={list?.poster}
+                        alt={list?.name}
+                      />
+                      <span>{list?.show_time}</span>
+                      <span>{list?.name}</span>
+                      <div className="home-grid-content-image-hover">
                         <div
-                          className="home-grid-content-image-hover-booking"
-                          onClick={() => handleSwitchTicket(m)}
+                          onClick={() => switchDetail(list?.id)}
+                          className="home-grid-content-image-hover-detail"
                         >
-                          Đặt vé
+                          Chi tiết
+                        </div>
+                        <div className="home-grid-content-image-hover-info">
+                          <span>Thể loại: {list?.type_of_movie}</span>
+                          <span>Thời lượng: {list?.range_of_movie} phút</span>
                         </div>
                       </div>
                       <div className="home-grid-content-image-background"></div>

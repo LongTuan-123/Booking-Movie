@@ -1,41 +1,42 @@
 .footer {
-    background: rgb(10, 30, 94);
+  background: rgb(10, 30, 94);
+  margin: auto;
+  color: #fff;
+
+  &-content {
+    display: flex;
+    border-bottom: 1px #ccc solid;
     margin: auto;
-    color: #fff;
-  
-    &-content {
-      display: flex;
-      border-bottom: 1px #ccc solid;
-      margin: auto;
-  
-      &-right {
-        text-align: center;
-        justify-content: space-between;
-        padding-top: 32px;
-  
-        &-info {
-          display: flex;
-          flex-direction: column;
+
+    &-right {
+      text-align: center;
+      justify-content: space-between;
+      padding-top: 32px;
+
+      &-info {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &-info-3 {
+        display: flex;
+        flex-wrap: wrap;
+
+        &-connectus {
+          width: 100%;
         }
-        &-info-3 {
-          display: flex;
-          flex-wrap: wrap;
-  
-          &-connectus {
-            width: 100%;
-          }
-  
-          &-icon:hover {
-            transform: scale(1.2);
-            cursor: pointer;
-          }
+
+        &-icon:hover {
+          transform: scale(1.2);
+          cursor: pointer;
         }
       }
     }
-    &-coppyright {
-      width: 80%;
-      padding: 20px;
-      margin: auto;
-    }
   }
-  
+
+  &-coppyright {
+    width: 80%;
+    padding: 20px;
+    margin: auto;
+  }
+}

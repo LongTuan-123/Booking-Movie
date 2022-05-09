@@ -41,7 +41,7 @@
   &-navbar {
     width: 100%;
     margin: auto;
-    background-color: #0a1e5e;
+    background-color: red;
     border-bottom: 1px solid rgba(255, 255, 255, 0.102);;
 
     &-content {
@@ -93,7 +93,7 @@
             border-bottom: 1px red solid;
             cursor: pointer;
             transform: scaleX(1.1);
-            font-weight: 400;
+            font-weight: 600;
 
             
         }
@@ -102,10 +102,15 @@
       &-left {
         width: 40%;
         img {
-          width: 100px;
-          height: 100px;
+          width: 80px;
+          height: 80px;
         }
       }
     }
   }
+}
+  .navbar-expand-lg {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    font-size: 15px;
 }

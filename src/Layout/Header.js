@@ -5,6 +5,7 @@ import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import {
   CONTACT,
+  GENERAL_ROLE,
   HOME,
   LOGIN,
   NEWS,
@@ -42,7 +43,7 @@ const Header = () => {
                     Trang chủ
                   </Link>
                 </Nav.Link>
-                <NavDropdown title="Phim" id="nav-dropdown" className="dropdown">
+                {/* <NavDropdown title="Phim" id="nav-dropdown" className="dropdown">
                   <NavDropdown.Item>
                     <Link
                       className="header-navbar-content-right-nav text-dark"
@@ -59,7 +60,7 @@ const Header = () => {
                       Phim đang chiếu
                     </Link>
                   </NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
 
                 <Nav.Link>
                   <Link
@@ -80,9 +81,9 @@ const Header = () => {
                 <Nav.Link>
                   <Link
                     className="header-navbar-content-right-nav text-light p-4"
-                    to={SEAT_PLAN}
+                    to={GENERAL_ROLE}
                   >
-                    Đặt ghế
+                    Quy định
                   </Link>
                 </Nav.Link>
               </Nav>
