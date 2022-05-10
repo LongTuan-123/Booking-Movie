@@ -205,4 +205,5 @@ const Payment = () => {
     </Layout>
   );
 };
+
 export default Payment;

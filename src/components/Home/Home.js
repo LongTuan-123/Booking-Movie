@@ -15,6 +15,7 @@ import {
 } from "../../config/endpointapi";
 import moment from "moment";
 import { Carousel, Col, Container, Row } from "react-bootstrap";
+
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [limit] = useState(1000);

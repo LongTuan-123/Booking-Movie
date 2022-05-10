@@ -21,9 +21,11 @@ import {
   PAYMENT,
   SEAT_PLAN,
   SIGNUP,
+  TICKET_LIST,
   USER_PROFILE,
 } from "../config/path";
 import Loading from "../common/Loading";
+import TicketList from "../components/Userprofile/TicketList";
 const Login = lazy(() => import("../components/auth/Login"));
 const Signup = lazy(() => import("../components/auth/Signup"));
 const Contact = lazy(() => import("../components/Contact/Contact"));
@@ -145,6 +147,19 @@ const AppRouter = () => {
                 <Redirect to={HOME} />
               ) : (
                 <Signup {...props} />
+              )
+            }
+          />
+          <Route 
+            path={TICKET_LIST}
+            exact
+            render={(props) =>
+              isTicket() ? (
+                <Redirect to={bindParam(PAYMENT, { id: showtime })} />
+              ) : isLogin() ? (
+                <TicketList {...props} />
+              ) : (
+                <Redirect to={LOGIN} />
               )
             }
           />
