@@ -17,14 +17,12 @@ const Contact = () => {
 
   const [opinion, setOpinion] = useState({});
   const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
-  const user_id = {user_id : dataUser}
+  const user_id = { user_id: dataUser };
   const json = JSON.stringify(user_id);
-
-
 
   const onSubmit = (value) => {
     value.user_id = dataUser;
-    console.log( value);
+    console.log(value);
     axios
       .post(API_OPINION_CREATE, value)
       .then(function (res) {
@@ -49,7 +47,7 @@ const Contact = () => {
 
   return (
     <Layout>
-      <Navigation />
+      <Navigation>Liên hệ</Navigation>
       <div className="contact">
         <div className="contact-container">
           <div className="contact-container-left">

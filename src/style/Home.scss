@@ -25,11 +25,11 @@
         color: white;
       }
 
-      .booking_label
-      {
-       display: flex;
-        
+      .booking_label {
+        display: flex;
+
       }
+
       &-title {
         h2 {
           text-transform: uppercase;
@@ -140,21 +140,26 @@
       }
 
       &-image {
-        width:fit-content;
+        width: fit-content;
+      
         color: #fff;
         text-align: center;
         text-transform: uppercase;
         // background-image: url("https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/movie-details-bg.jpg");
-        position: relative;
+        // position: relative;
         margin: 20px;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         overflow: hidden;
 
         img {
           padding-bottom: 20px;
+          position: relative;
           margin: auto;
-          height: 480px;
-          width: 100px;
+          width: 98%;
+          height: 560px;
+          overflow: hidden;
+
+          
           z-index: 0;
         }
 
@@ -217,16 +222,18 @@
 
         &-background {
           position: absolute;
-          bottom: 8%;
+          overflow: hidden;
           display: none;
           margin: auto;
           background-color: rgb(10, 30, 94);
+         
           opacity: 0.6;
-          height: 50%;
-          width: 50%;
-          left: 25%;
+          height: 340px;
+          width: 100%;
+          top:200px;
+          
           z-index: 1;
-          overflow: hidden;
+          
         }
 
         &:hover {

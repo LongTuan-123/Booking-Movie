@@ -13,6 +13,7 @@ import { bindParam, isLogin, isTicket } from "../config/function";
 import axios from "axios";
 import {
   CONTACT,
+  GENERAL_ROLE,
   HOME,
   LOGIN,
   MOVIE_DETAIL,
@@ -26,6 +27,7 @@ import {
 } from "../config/path";
 import Loading from "../common/Loading";
 import TicketList from "../components/Userprofile/TicketList";
+import GeneralRole from "../components/GeneralRole/GeneralRole";
 const Login = lazy(() => import("../components/auth/Login"));
 const Signup = lazy(() => import("../components/auth/Signup"));
 const Contact = lazy(() => import("../components/Contact/Contact"));
@@ -36,14 +38,14 @@ const Newsdetail = lazy(() => import("../components/News/Newsdetail"));
 
 const AppRouter = () => {
   const showtime = localStorage.getItem("@showtime");
-  const token= localStorage.getItem("token_user");
+  const token = localStorage.getItem("token_user");
 
   useEffect(() => {
     axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
-  }, [token])
+  }, [token]);
 
   return (
-    <Suspense fallback={<Loading width="1000" height="1000"/>}>
+    <Suspense fallback={<Loading width="1000" height="1000" />}>
       <Router>
         <Switch>
           <Route
@@ -100,6 +102,10 @@ const AppRouter = () => {
           <Route path={NEWS} exact>
             <News />
           </Route>
+          <Route path={GENERAL_ROLE} exact>
+            <GeneralRole />
+          </Route>
+
           <Route
             path={NEWS_DETAIL}
             exact

@@ -12,6 +12,7 @@
       padding-bottom: 100px;
       box-shadow: 12px 12px 29.4px 0.6px #000;
     }
+
     &-right {
       width: 50%;
       background-image: url(https://dmitryvolkov.me/demo/flixtv/main/img/bg.jpg);
@@ -31,6 +32,7 @@
         &-phone {
           width: 50%;
           border-right: 1px #33415b solid;
+
           &-content {
             display: flex;
             flex-direction: column;
@@ -39,6 +41,7 @@
 
         &-email {
           width: 50%;
+
           &-content {
             display: flex;
             flex-direction: column;
@@ -51,6 +54,7 @@
       }
     }
   }
+
   &-maintitle {
     color: #31b8d7;
     padding-bottom: 12px;
@@ -63,6 +67,7 @@
     width: 100%;
 
     color: #fff;
+
     &__input {
       width: 100%;
       border: 1px solid #12387e;
@@ -74,6 +79,7 @@
       height: 60px;
       padding: 20px;
     }
+
     &-border {
       margin: auto;
       border-bottom: 2px rgba(11, 7, 66, 0.5) solid;
@@ -81,6 +87,7 @@
       width: 80%;
     }
   }
+
   &-label {
     padding: 8px;
 
@@ -94,15 +101,14 @@
 
   &-btn {
     text-align: center;
+
     &-submit {
       margin: 20px;
       padding: 20px;
-      background-image: -webkit-linear-gradient(
-        169deg,
-        #5560ff 17%,
-        #aa52a1 63%,
-        #ff4343 100%
-      );
+      background-image: -webkit-linear-gradient(169deg,
+          #5560ff 17%,
+          #aa52a1 63%,
+          #ff4343 100%);
       border-radius: 30px;
       width: 50%;
     }

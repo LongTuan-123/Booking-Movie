@@ -1,0 +1,25 @@
+.generalrole {
+    background-color: #001232;
+
+    .container {
+        background: rgb(10, 30, 94);
+        padding: 20px;
+        border-bottom: 1px solid #000;
+
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            color: #31d7a9;
+            padding: 20px;
+        }
+
+        h2 {
+            color: red;
+            padding: 16px;
+        }
+
+        .detail {
+            color: white;
+        }
+    }
+}

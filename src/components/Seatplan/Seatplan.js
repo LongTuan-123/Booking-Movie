@@ -22,7 +22,7 @@ const Seatplan = () => {
   const [showtime, setShowtime] = useState([]);
   const [ticket, setTicket] = useState([]);
   const [seatSearch] = useState("");
-  const col = ["A", "B", "C", "D", "E", "F", "G", "H", "J"];
+  const col = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
   const user = localStorage.getItem("data_user");
   const row = [];
@@ -34,14 +34,14 @@ const Seatplan = () => {
   const [showTimeDetail, setShowTimeDetail] = useState({});
   const showtimedetail = JSON.parse(localStorage.getItem("@showtime"));
   const [movieDetail, setMovieDetail] = useState({});
-  const [room,setRoom]=useState({});
+  const [room, setRoom] = useState({});
   for (var i = 1; i <= 10; i++) {
     row.push(i);
   }
 
   useEffect(() => {
     const getTicket = async () => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       const params = {
         limit: 1000,
         seat: seatSearch,
@@ -73,7 +73,6 @@ const Seatplan = () => {
           setMovieDetail(res?.data?.data?.movie);
           setRoom(res?.data?.data?.room);
           console.log(movieDetail);
-
         })
         .catch((err) => {
           console.log(err);
@@ -81,8 +80,6 @@ const Seatplan = () => {
     };
     getShowTimeDetail();
   }, []);
-  
-
 
   useEffect(() => {
     const getSeat = async () => {
@@ -90,7 +87,6 @@ const Seatplan = () => {
         .get(bindParam(API_SEAT_IN_ROOM, { id }))
         .then((res) => {
           setSeat(res?.data?.data);
-       
         })
         .catch((err) => {
           console.log(err);
@@ -115,7 +111,7 @@ const Seatplan = () => {
         (money) => money !== JSON.parse(value).money,
       );
       const seatFilter = seatClone.filter(
-        (seat) => seat?.id !== JSON.parse(value).id
+        (seat) => seat?.id !== JSON.parse(value).id,
       );
 
       setSelectSeat(seatFilter);
@@ -126,14 +122,14 @@ const Seatplan = () => {
 
   const handlePayment = () => {
     if (dataUser && user) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       axios
         .post(API_ORDER_SEAT, {
           seats: selectSeat.map((seat) => seat.id).join(","),
           showtime_id: Number(localStorage.getItem("@showtime")),
           confirm: 0,
           money: moneyDetail.join(","),
-          created_at: moment().format("YYYY-MM-DD HH:mm:ss"),
+          created_at: moment().format("YYYY-MM-DD HH:mm"),
           user_id: dataUser,
         })
         .then((res) => {
@@ -151,7 +147,7 @@ const Seatplan = () => {
 
   return (
     <Layout>
-      <Navigation />
+      <Navigation>Đặt vé</Navigation>
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -163,7 +159,7 @@ const Seatplan = () => {
         draggable={false}
         pauseOnHover
       />
-      <div className="seatplan">
+      <div className="seatplan ">
         <div className="seatplan-title">
           <div className="seatplan-title-label">
             Phòng chiếu <br /> {room.name}
@@ -174,11 +170,11 @@ const Seatplan = () => {
           <div className="seatplan-title-label">
             Phim <br /> {movieDetail.name}
           </div>
-          <div className="seatplan-title-label">Số ghế</div>
+          {/* <div className="seatplan-title-label">Số ghế</div>
           <div className="seatplan-title-label">
             Time left
             <br />
-          </div>
+          </div> */}
         </div>
         <div className="seatplan-content">
           <div className="seatplan-content-screen">
@@ -198,21 +194,32 @@ const Seatplan = () => {
               <div className="seatplan-content-screen-seat">
                 <div className="seatplan-content-screen-seat-single">
                   {seat?.map((se) => {
-                    return (
-                      <div className="seatplan-content-screen-seat-single_check">
-                        <input
-                          onChange={onSelectSeat}
-                          className="checkseat"
-                          checked={ticket.includes(se?.id) ? true : null}
-                          value={JSON.stringify(se)}
-                          type="checkbox"
-                        />
-                        <span className="checkbackground underline">
-                          {se?.row}
-                          {se?.order}
-                        </span>
-                      </div>
-                    );
+                    if (!!ticket.includes(se?.id)) {
+                      return (
+                        <div className="seatplan-content-screen-seat-single_check">
+                          <span className="checkbackground__checked underline">
+                            {se?.row}
+                            {se?.order}
+                          </span>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="seatplan-content-screen-seat-single_check">
+                          <input
+                            onChange={onSelectSeat}
+                            className="checkseat"
+                            checked={ticket.includes(se?.id) ? true : null}
+                            value={JSON.stringify(se)}
+                            type="checkbox"
+                          />
+                          <span className="checkbackground underline ">
+                            {se?.row}
+                            {se?.order}
+                          </span>
+                        </div>
+                      );
+                    }
                   })}
                 </div>
               </div>
@@ -224,12 +231,26 @@ const Seatplan = () => {
             </div>
           </div>
         </div>
+
+        <div className="container">
+          <div className="list-seat container row">
+            <div className="list-seat-tutor col-xl-6 d-flex">
+              Ghế chưa chọn :
+              <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01.png" />
+            </div>
+            <div className="list-seat-tutor col-xl-6 d-flex">
+              Ghế đã chọn :
+              <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-free.png" />
+            </div>
+            {/* <div>Ghế đang chọn : <img src=""/></div> */}
+          </div>
+        </div>
         <div className="seatplan-proceed">
           <div className="container">
-            <div className="seatplan-proceed-seat">
+            {/* <div className="seatplan-proceed-seat">
               Ghế đã chọn: {selectSeat.row}
-            </div>
-            <div className="seatplan-proceed-price">Tổng tiền: {money}</div>
+            </div> */}
+            <div className="seatplan-proceed-price">Tổng tiền: {money} $</div>
             <div className="seatplan-proceed-btn">
               <button type="submit" onClick={handlePayment}>
                 Thanh toán

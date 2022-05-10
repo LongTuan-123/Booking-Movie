@@ -11,6 +11,7 @@ export const API_SHOWTIME_DETAIL= `${BASE_API}/api/showtime/:id`
 
 // API Seat
 export const API_SEAT_IN_ROOM = `${BASE_API}/api/seat/in_room/:id`
+export const API_SEAT =`${BASE_API}/api/seat`
 
 //API Payment
 export const API_TICKET = `${BASE_API}/api/tickets`
@@ -20,7 +21,7 @@ export const API_DELETE_SEAT = `${BASE_API}/api/tickets/delete`
 export const API_TICKET_USER_ID = `${BASE_API}/api/tickets/ticket_user_id`
 
 //API Movie
-export const API_MOVIE = `${BASE_API}/api/movies`
+export const API_MOVIES = `${BASE_API}/api/movies`
 export const API_MOVIES_DETAIL = `${BASE_API}/api/movies/:id`
 
 //API Banner

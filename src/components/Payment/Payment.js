@@ -10,6 +10,7 @@ import {
   API_PAY_SEAT,
   API_SHOWTIME_DETAIL,
 } from "../../config/endpointapi";
+import Navigation from "../../Layout/Navigation";
 import { useHistory, useParams } from "react-router-dom";
 import { HOME, SEAT_PLAN } from "../../config/path";
 import { bindParam } from "../../config/function";
@@ -143,6 +144,9 @@ const Payment = () => {
 
   return (
     <Layout>
+      <Navigation>
+        Thanh toán
+      </Navigation>
       <ToastContainer
         position="top-right"
         autoClose={2000}
