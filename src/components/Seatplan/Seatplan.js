@@ -19,7 +19,7 @@ import { getToken } from "../../Http";
 
 const Seatplan = () => {
   const { id } = useParams();
-  const [showtime, setShowtime] = useState([]);
+  const [showtime, setShowtime] = useState();
   const [ticket, setTicket] = useState([]);
   const [seatSearch] = useState("");
   const col = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -35,6 +35,7 @@ const Seatplan = () => {
   const showtimedetail = JSON.parse(localStorage.getItem("@showtime"));
   const [movieDetail, setMovieDetail] = useState({});
   const [room, setRoom] = useState({});
+
   for (var i = 1; i <= 10; i++) {
     row.push(i);
   }
@@ -50,8 +51,11 @@ const Seatplan = () => {
       };
       await axios.get(API_TICKET, { params }).then((res) => {
         setShowtime(res?.data?.data?.data);
+
+
       });
     };
+    
 
     getTicket();
   }, []);
@@ -144,6 +148,7 @@ const Seatplan = () => {
       history.push(LOGIN);
     }
   };
+  
 
   return (
     <Layout>

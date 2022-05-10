@@ -7,8 +7,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { API_LOGOUT } from "../../config/endpointapi";
-import { useHistory } from "react-router-dom";
-import { HOME } from "../../config/path";
+import { Link, useHistory } from "react-router-dom";
+import { HOME, TICKET_LIST } from "../../config/path";
 import { getToken } from "../../Http";
 
 
@@ -65,6 +65,9 @@ const Userprofile = () => {
               {`Wellcome ${user.last_name} ${user.first_name}`}
             
             </div>
+            <Link to={TICKET_LIST}>
+              Lịch sử
+            </Link>
             </div>
             <div className="userprofile-header-btn col-xl-2 col-sm-12 text-center">
               <button  className="m-auto" onClick={onLogout}>
