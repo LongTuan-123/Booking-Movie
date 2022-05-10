@@ -14,49 +14,52 @@ const News = () => {
   const [limit] = useState(1000);
   const [page] = useState(1);
 
-
   const history = useHistory();
-const switchDetail =(id) =>{
-
-    history.push(bindParam(NEWS_DETAIL,{id}));
-};
-useEffect(() => {
-  const getNews = async () => {
-    const params = { limit, page, keyword };
-    await axios
-      .get(API_NEWS, { params })
-      .then((res) => {
-        setPost(res?.data?.data?.data);
-      console.log(post);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const switchDetail = (id) => {
+    history.push(bindParam(NEWS_DETAIL, { id }));
   };
-  getNews();
-}, [limit, page, keyword]);
+  useEffect(() => {
+    const getNews = async () => {
+      const params = { limit, page, keyword };
+      await axios
+        .get(API_NEWS, { params })
+        .then((res) => {
+          setPost(res?.data?.data?.data);
+          console.log(post);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getNews();
+  }, [limit, page, keyword]);
   return (
     <Layout>
-      <Navigation />
+      <Navigation>Tin tức</Navigation>
       <div className="news">
         <div className="news-content">
           {post?.map((p) => {
             return (
               <div className="news-content-item">
-                <img  src={p?.image}></img>
+                <img src={p?.image}></img>
                 <div className="news-content-item-info">
-                  <div onClick={()=> switchDetail(p.id)} className="news-content-item-info-title">{p?.name}</div>
-                  <div className="news-content-item-info-react">
+                  <div
+                    onClick={() => switchDetail(p.id)}
+                    className="news-content-item-info-title"
+                  >
+                    {p?.name}
                   </div>
+                  <div className="news-content-item-info-react"></div>
                   <div className="news-content-item-info-description">
                     {p?.description}
                   </div>
                   <div
-                  onClick={()=> switchDetail(p.id)} 
-                  className="news-content-item-info-entry">
+                    onClick={() => switchDetail(p.id)}
+                    className="news-content-item-info-entry"
+                  >
                     Đọc thêm
-                    <BsArrowRightCircle/>
-                    </div>
+                    <BsArrowRightCircle />
+                  </div>
                 </div>
               </div>
             );

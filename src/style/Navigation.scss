@@ -1,6 +1,28 @@
 .navigation {
-    img {
-        width: 100%;
-        height: 200px;
+    height: 200px;
+    // position: relative;
+    background-image: url("https://dmitryvolkov.me/demo/flixgo2.0/main/img/section/section.jpg");
+    background-size: cover;
+
+    &-background {
+        margin: auto;
+
+        img {
+            width: 100%;
+            height: 200px;
+            z-index: 1;
+        }
+
+        &-title {
+            text-align: center;
+            z-index: 2;
+            color: #fff;
+            margin: auto;
+            width: 100%;
+            font-size: 3em;
+            align-items: center;
+            padding: 60px;
+            text-transform: uppercase;
+        }
     }
 }

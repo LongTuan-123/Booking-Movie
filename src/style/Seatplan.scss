@@ -14,7 +14,7 @@
     flex-direction: row;
 
     &-label {
-      width: 25%;
+      width: 33%;
       height: 100px;
       font-size: 20px;
       text-align: center;
@@ -41,9 +41,9 @@
 
       .column {
         display: flex;
-        width: 800px;
+        width: fit-content;
         margin: auto;
-        padding-left: 100px;
+
 
         &-count {
           width: 40px;
@@ -113,7 +113,7 @@
               display: block;
               top: 0px;
               left: 0px;
-              background-image: url("http://pixner.net/boleto/demo/assets/images/movie/seat01-booked.png");
+              background-image: url("http://pixner.net/boleto/demo/assets/images/movie/seat01-free.png");
               width: 40px;
               height: 40px;
               z-index: 1;
@@ -185,6 +185,11 @@
     display: flex;
     margin: auto;
     padding: 20px;
+
+    &-tutor {
+      padding: 12px;
+      margin: auto;
+    }
 
     img {
       width: fit-content;

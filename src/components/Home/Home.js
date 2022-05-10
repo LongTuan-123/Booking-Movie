@@ -35,7 +35,7 @@ const Home = () => {
     centerMode: true,
     infinite: true,
     slidesToScroll: 1,
-    centerPadding: "20px",
+    // centerPadding: "20px",
     slidesToShow: movies?.length > 1 ? (movies?.length > 2 ? 3 : 2) : 1,
   };
   const settingListMovies = {
@@ -43,7 +43,7 @@ const Home = () => {
     centerMode: true,
     infinite: true,
     slidesToScroll: 1,
-    centerPadding: "20px",
+    // centerPadding: "20px",
     slidesToShow: 3,
     responsive: [
       {
@@ -53,7 +53,7 @@ const Home = () => {
           centerMode: true,
           infinite: true,
           slidesToScroll: 1,
-          centerPadding: "20px",
+          // centerPadding: "20px",
           slidesToShow: 2,
         },
       },
@@ -64,7 +64,7 @@ const Home = () => {
           centerMode: true,
           infinite: true,
           slidesToScroll: 1,
-          centerPadding: "20px",
+          // centerPadding: "20px",
           slidesToShow: 1,
         },
       },
@@ -209,6 +209,15 @@ const Home = () => {
                 <h2>Đặt vé Online</h2>
               </div>
             </div>
+            <div className="select_date col-sm-12 col-lg-3">
+              <span className="container_input__title">Chọn ngày </span>
+              <input
+                min={moment().format("YYYY-MM-DD")}
+                onChange={handleDate}
+                type={"date"}
+                defaultValue={moment().format("YYYY-MM-DD")}
+              />
+            </div>
             <div className="select_movie col-sm-12 col-lg-3">
               <span className="container_input__title">Chọn phim</span>
               <select
@@ -224,17 +233,9 @@ const Home = () => {
                 })}
               </select>
             </div>
-            <div className="select_date col-sm-12 col-lg-3">
-              <span className="container_input__title">Chọn ngày</span>
-              <input
-                min={moment().format("YYYY-MM-DD")}
-                onChange={handleDate}
-                type={"date"}
-                defaultValue={moment().format("YYYY-MM-DD")}
-              />
-            </div>
+
             <div className="select_time col-sm-12 col-lg-3">
-              <span className="container_input__title">Chọn thời gian</span>
+              <span className="container_input__title">Chọn giờ chiếu</span>
               <select
                 defaultValue={"- Vui lòng chọn giờ chiếu -"}
                 onChange={handleTime}
@@ -266,7 +267,7 @@ const Home = () => {
                   return (
                     <div className="home-grid-content-image" key={m.id}>
                       <img
-                        style={{ width: 360 }}
+                        // style={{ width: 360 }}
                         src={m?.movie?.poster}
                         alt={m?.movie?.name}
                       />
@@ -301,7 +302,7 @@ const Home = () => {
                   return (
                     <div className="home-grid-content-image" key={list.id}>
                       <img
-                        style={{ width: 360 }}
+                        // style={{ width: 360 }}
                         src={list?.poster}
                         alt={list?.name}
                       />

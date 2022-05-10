@@ -50,7 +50,9 @@ const Userprofile = () => {
   };
   return (
     <Layout>
-      <Navigation />
+      <Navigation>
+        Hồ sơ cá nhân
+        </Navigation>
       <div className="userprofile ">
         <div className="userprofile-header">
           <div className="container row m-auto">

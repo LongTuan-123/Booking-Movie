@@ -122,7 +122,9 @@ const Moviedetail = () => {
         draggable
         pauseOnHover={false}
       />
-      <Navigation />
+      <Navigation >
+        Chi tiết phim
+        </Navigation>
       <div className="movieDetail">
         <div className="movieDetail-name">{data?.name}</div>
         <div className="movieDetail-content">

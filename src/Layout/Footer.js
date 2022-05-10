@@ -13,7 +13,7 @@ const Footer = () => {
 
         <div className="footer-content-right row">
         <div className="footer-content-right col-xl-3 col-12">
-          <img className="m-auto" src={Logo} />
+          <img className="" src={Logo} />
         </div>
           <div className="footer-content-right-info col-xl-3 col-sm-12 text-center">
             Địa chỉ liên lạc

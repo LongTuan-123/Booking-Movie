@@ -20,7 +20,7 @@ import {
   NavbarBrand,
   NavDropdown,
 } from "react-bootstrap";
-import { BiUser } from 'react-icons/bi';
+import { BiUser } from "react-icons/bi";
 
 const Header = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));
@@ -98,12 +98,12 @@ const Header = () => {
                 </Nav.Link>
               ) : (
                 <Nav.Link>
-                  <Link className="header-navbar-content-right-nav d-flex" to={LOGIN}>
-                    <BiUser/>
-                    <span>
-                    Đăng nhập
-                    </span>
-                  
+                  <Link
+                    className="header-navbar-content-right-nav d-flex"
+                    to={LOGIN}
+                  >
+                    <BiUser />
+                    <span>Đăng nhập</span>
                   </Link>
                 </Nav.Link>
               )}

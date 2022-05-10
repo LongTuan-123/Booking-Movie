@@ -22,7 +22,7 @@ const Seatplan = () => {
   const [showtime, setShowtime] = useState([]);
   const [ticket, setTicket] = useState([]);
   const [seatSearch] = useState("");
-  const col = ["A", "B", "C", "D", "E", "F", "G", "H", ];
+  const col = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const dataUser = JSON.parse(localStorage.getItem("data_user"))?.id;
   const user = localStorage.getItem("data_user");
   const row = [];
@@ -147,7 +147,7 @@ const Seatplan = () => {
 
   return (
     <Layout>
-      <Navigation />
+      <Navigation>Đặt vé</Navigation>
       <ToastContainer
         position="top-right"
         autoClose={2000}
@@ -159,7 +159,7 @@ const Seatplan = () => {
         draggable={false}
         pauseOnHover
       />
-      <div className="seatplan">
+      <div className="seatplan ">
         <div className="seatplan-title">
           <div className="seatplan-title-label">
             Phòng chiếu <br /> {room.name}
@@ -195,16 +195,14 @@ const Seatplan = () => {
                 <div className="seatplan-content-screen-seat-single">
                   {seat?.map((se) => {
                     if (!!ticket.includes(se?.id)) {
-                      return(
-
-                      <div className="seatplan-content-screen-seat-single_check">    
+                      return (
+                        <div className="seatplan-content-screen-seat-single_check">
                           <span className="checkbackground__checked underline">
                             {se?.row}
                             {se?.order}
                           </span>
                         </div>
-                      )
-
+                      );
                     } else {
                       return (
                         <div className="seatplan-content-screen-seat-single_check">
@@ -215,7 +213,7 @@ const Seatplan = () => {
                             value={JSON.stringify(se)}
                             type="checkbox"
                           />
-                          <span className="checkbackground underline">
+                          <span className="checkbackground underline ">
                             {se?.row}
                             {se?.order}
                           </span>
@@ -233,15 +231,18 @@ const Seatplan = () => {
             </div>
           </div>
         </div>
-        
 
         <div className="container">
-          <div className="list-seat row">
-            <div className="col-xl-6 d-flex">Ghế chưa chọn : <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01.png"/></div>
-            <div className="col-xl-6 d-flex">Ghế đã chọn : <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-booked.png"/></div>
+          <div className="list-seat container row">
+            <div className="list-seat-tutor col-xl-6 d-flex">
+              Ghế chưa chọn :
+              <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01.png" />
+            </div>
+            <div className="list-seat-tutor col-xl-6 d-flex">
+              Ghế đã chọn :
+              <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-free.png" />
+            </div>
             {/* <div>Ghế đang chọn : <img src=""/></div> */}
-
-            
           </div>
         </div>
         <div className="seatplan-proceed">

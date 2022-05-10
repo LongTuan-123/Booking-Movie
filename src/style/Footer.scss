@@ -12,6 +12,9 @@
       text-align: center;
       justify-content: space-between;
       padding-top: 32px;
+      img{
+        height: 100%;
+      }
 
       &-info {
         display: flex;
@@ -21,6 +24,7 @@
       &-info-3 {
         display: flex;
         flex-wrap: wrap;
+        
 
         &-connectus {
           width: 100%;
@@ -29,6 +33,7 @@
         &-icon:hover {
           transform: scale(1.2);
           cursor: pointer;
+          
         }
       }
     }
