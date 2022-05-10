@@ -18,6 +18,7 @@ export const API_TICKET = `${BASE_API}/api/tickets`
 export const API_ORDER_SEAT = `${BASE_API}/api/tickets/order`
 export const API_PAY_SEAT = `${BASE_API}/api/tickets/pay`
 export const API_DELETE_SEAT = `${BASE_API}/api/tickets/delete`
+export const API_TICKET_USER_ID = `${BASE_API}/api/tickets/ticket_user_id`
 
 //API Movie
 export const API_MOVIES = `${BASE_API}/api/movies`
@@ -36,3 +37,5 @@ export const API_EVALUATION_DELETE = `${BASE_API}/api/evaluation/delete/:id`
  
 //API opinion
 export const API_OPINION_CREATE =`${BASE_API}/api/opinion/store`
+
+

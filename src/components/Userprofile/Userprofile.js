@@ -17,7 +17,7 @@ const Userprofile = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
-  console.log(user);
+
   const onLogout = () => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
     axios
@@ -48,6 +48,7 @@ const Userprofile = () => {
         });
       });
   };
+  
   return (
     <Layout>
       <Navigation>

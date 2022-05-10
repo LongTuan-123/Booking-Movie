@@ -1,0 +1,21 @@
+.layout-ticket {
+    width: 60%;
+    margin: auto;
+    padding: 20px;
+    .ticket {
+        display: flex;
+        align-items: center;
+        width: 60%;
+        margin: auto;
+        border: 1px solid black;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 40px;
+        img{
+            width: 200px;
+        }
+        &-content {
+            font-size: 14px;
+        }
+    }
+}
