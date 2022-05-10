@@ -196,7 +196,7 @@ const Seatplan = () => {
                   {seat?.map((se) => {
                     if (!!ticket.includes(se?.id)) {
                       return (
-                        <div className="seatplan-content-screen-seat-single_check">
+                        <div className={se?.type_seat == 3 ? `seatplan-content-screen-seat-single_check` : "seatplan-content-screen-seat-single_vip"}>
                           <span className="checkbackground__checked underline">
                             {se?.row}
                             {se?.order}
@@ -205,7 +205,7 @@ const Seatplan = () => {
                       );
                     } else {
                       return (
-                        <div className="seatplan-content-screen-seat-single_check">
+                        <div className={se?.type_seat == 3 ? `seatplan-content-screen-seat-single_check` : "seatplan-content-screen-seat-single_vip"}>
                           <input
                             onChange={onSelectSeat}
                             className="checkseat"
@@ -213,7 +213,7 @@ const Seatplan = () => {
                             value={JSON.stringify(se)}
                             type="checkbox"
                           />
-                          <span className="checkbackground underline ">
+                          <span className="checkbackground underline">
                             {se?.row}
                             {se?.order}
                           </span>
@@ -235,8 +235,12 @@ const Seatplan = () => {
         <div className="container">
           <div className="list-seat container row">
             <div className="list-seat-tutor col-xl-6 d-flex">
-              Ghế chưa chọn :
+              Ghế thường:
               <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01.png" />
+            </div>
+            <div className="list-seat-tutor col-xl-6 d-flex">
+              Ghế vip:
+              <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-booked.png" />
             </div>
             <div className="list-seat-tutor col-xl-6 d-flex">
               Ghế đã chọn :

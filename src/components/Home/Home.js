@@ -39,13 +39,14 @@ const Home = () => {
     // centerPadding: "20px",
     slidesToShow: movies?.length > 1 ? (movies?.length > 2 ? 3 : 2) : 1,
   };
+
   const settingListMovies = {
     className: "center",
     centerMode: true,
     infinite: true,
     slidesToScroll: 1,
     // centerPadding: "20px",
-    slidesToShow: 3,
+    slidesToShow: listMovies?.length > 1 ? (listMovies?.length > 2 ? 3 : 2) : 1,
     responsive: [
       {
         breakpoint: 1024,
@@ -66,7 +67,7 @@ const Home = () => {
           infinite: true,
           slidesToScroll: 1,
           // centerPadding: "20px",
-          slidesToShow: 1,
+          slidesToShow: listMovies?.length > 1 ? (listMovies?.length > 2 ? 3 : 2) : 1,
         },
       },
     ],
