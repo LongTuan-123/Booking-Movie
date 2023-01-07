@@ -34,22 +34,33 @@
       padding: 40px;
       height: fit-content;
 
+      &-seatP {
+        margin: auto;
+        width: fit-content;
+      }
+
       &__img {
         display: block;
         margin: auto;
       }
 
-      .column {
+      .column-parent {
         display: flex;
-        width: fit-content;
-        margin: auto;
 
+        .column-child {
+          width: 60px;
+        }
 
-        &-count {
-          width: 40px;
-          height: 40px;
-          text-align: center;
-          padding: 30px;
+        .column {
+          display: flex;
+          width: fit-content;
+
+          &-count {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            padding: 30px;
+          }
         }
       }
 
@@ -74,13 +85,10 @@
         display: flex;
         flex-direction: row;
         width: fit-content;
-        margin: auto;
-        padding-left: 200px;
       }
 
       &-seat {
         padding-top: 80px;
-        width: 840px;
         display: flex;
         flex-wrap: wrap;
 
@@ -96,6 +104,7 @@
             width: 60px;
             height: 60px;
             position: relative;
+
             .checkbackground {
               display: block;
               top: 0px;
@@ -192,8 +201,8 @@
     width: 100%;
 
     .container {
-      width: 60%;
-      margin: auto;
+      width: 80%;
+      padding-bottom: 16px;
       display: flex;
       flex-direction: row;
     }
@@ -202,13 +211,14 @@
 
     &-seat,
     &-price {
-      width: 40%;
       padding: 40px;
+      margin: auto;
+      text-align: center;
     }
 
     &-btn {
-      width: 20%;
       margin: auto;
+      text-align: center;
 
       button {
         background-image: -webkit-linear-gradient(169deg,

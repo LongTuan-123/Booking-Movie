@@ -1,6 +1,7 @@
 .home {
   background-color: #001232;
   width: 100%;
+  height: 100%;
 
   &-banner {
     z-index: 4;
@@ -9,14 +10,15 @@
   &-snapbook {
     width: 100%;
     padding: 20px 0px;
-    vertical-align: auto;
     display: block;
     font-size: 20px;
+    background-image: url("../asset/snapbook_background.png");
+    background-size: cover;
 
     .container {
-      width: 75%;
+      width: 80%;
       margin: auto;
-      display: flex;
+
       align-items: center;
 
 
@@ -27,17 +29,22 @@
 
       .booking_label {
         display: flex;
+        margin: auto;
+        justify-content: center;
 
       }
 
       &-title {
+        display: flex;
+
         h2 {
+          margin: auto;
           text-transform: uppercase;
           font-family: 'Futurab';
           font-weight: normal;
           font-size: 36px;
           color: #e00d7a;
-          line-height: 50px;
+
           text-transform: uppercase;
           display: inline-block;
           vertical-align: middle;
@@ -97,13 +104,13 @@
       }
     }
 
-    background-image: url("https://cinestar.com.vn/catalog/view/theme/default/images/pattern.png");
+
   }
 
   &-grid {
     width: 100%;
     margin: auto;
-    padding: 20px 0px;
+    padding: 0px;
     color: #fff;
 
     &-content {
@@ -141,26 +148,22 @@
 
       &-image {
         width: fit-content;
-      
+        height: fit-content;
         color: #fff;
         text-align: center;
         text-transform: uppercase;
-        // background-image: url("https://www.bhdstar.vn/wp-content/themes/bhd/assets/images/movie-details-bg.jpg");
+
         // position: relative;
-        margin: 20px;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        overflow: hidden;
+
 
         img {
-          padding-bottom: 20px;
-          position: relative;
-          margin: auto;
-          width: 98%;
-          height: 560px;
-          overflow: hidden;
 
-          
-          z-index: 0;
+          position: relative;
+          margin: 0 20px;
+          width: 98%;
+          height: 500px;
+          overflow: hidden;
         }
 
         span {
@@ -169,25 +172,25 @@
 
         &-hover {
           position: absolute;
-          bottom: 20%;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+          background-color: rgb(10, 30, 94);
+          top: 250px;
+          height: 250px;
+          width: 100%;
           color: #fff;
+          margin: 0 20px;
           display: none;
-          width: 40%;
-          margin: auto;
-          z-index: 2;
-          left: 0px;
-          right: 0px;
-          font-weight: 500;
+          opacity: 0.9;
+
 
           &-detail {
+            display: flex;
+            flex-direction: column;
+            margin: 40px auto;
+            gap: 20px;
             border: 1px red solid;
             border-radius: 20px;
             padding: 8px;
-            width: 100%;
+            width: 50%;
           }
 
           &-detail:hover {
@@ -220,26 +223,11 @@
           }
         }
 
-        &-background {
-          position: absolute;
-          overflow: hidden;
-          display: none;
-          margin: auto;
-          background-color: rgb(10, 30, 94);
-         
-          opacity: 0.6;
-          height: 340px;
-          width: 100%;
-          top:200px;
-          
-          z-index: 1;
-          
-        }
 
         &:hover {
           color: rgb(10, 30, 94);
           transform: scale(1.04);
-          transition: transform 0.5s, filter 1.5s step-end;
+          transition: transform 0.5s, filter 1.5s ease-in-out;
           cursor: pointer;
         }
 
@@ -248,10 +236,6 @@
           animation: down-to-up 1s ease-in-out;
         }
 
-        &:hover &-background {
-          display: block;
-          animation: down-to-up 1s ease-in-out;
-        }
       }
     }
   }

@@ -11,15 +11,13 @@ import { Link, useHistory } from "react-router-dom";
 import { HOME, TICKET_LIST } from "../../config/path";
 import { getToken } from "../../Http";
 
-
-
 const Userprofile = () => {
   const user = JSON.parse(localStorage.getItem("data_user"));
   const { register, handleSubmit } = useForm();
   const history = useHistory();
 
   const onLogout = () => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     axios
       .post(API_LOGOUT)
       .then(function (res) {
@@ -48,29 +46,24 @@ const Userprofile = () => {
         });
       });
   };
-  
+
   return (
     <Layout>
-      <Navigation>
-        Hồ sơ cá nhân
-        </Navigation>
+      <Navigation>Hồ sơ cá nhân</Navigation>
       <div className="userprofile ">
         <div className="userprofile-header">
           <div className="container row m-auto">
             <div className="d-flex col-xl-8 col-sm-12 m-auto">
-            <div className="userprofile-header-icon ">
-              <img src="https://dmitryvolkov.me/demo/flixgo2.0/main/img/user.svg" />
-            </div>
-            <div className="userprofile-header-name ">
-              {`Wellcome ${user.last_name} ${user.first_name}`}
-            
-            </div>
-            <Link to={TICKET_LIST}>
-              Lịch sử
-            </Link>
+              <div className="userprofile-header-icon ">
+                <img src="https://dmitryvolkov.me/demo/flixgo2.0/main/img/user.svg" />
+              </div>
+              <div className="userprofile-header-name ">
+                {`Wellcome ${user.full_name}`}
+              </div>
+              <Link to={TICKET_LIST}>Lịch sử</Link>
             </div>
             <div className="userprofile-header-btn col-xl-2 col-sm-12 text-center">
-              <button  className="m-auto" onClick={onLogout}>
+              <button className="m-auto" onClick={onLogout}>
                 Log out
               </button>
             </div>
@@ -107,9 +100,7 @@ const Userprofile = () => {
             <div className="userprofile-detail-security mt-4 col-xl-5 col-sm-12">
               <form className="modify">
                 <div className="modify-label">Đổi mật khẩu</div>
-                <div className="modify-label-name">
-                  Mật khẩu cũ 
-                </div>
+                <div className="modify-label-name">Mật khẩu cũ</div>
                 <div className="modify-form-border">
                   <input
                     className="modify-input"
@@ -117,9 +108,7 @@ const Userprofile = () => {
                     {...register("oldpassword")}
                   />
                 </div>
-                <div className="modify-label-name">
-                    Mật khẩu mới
-                </div>
+                <div className="modify-label-name">Mật khẩu mới</div>
                 <div className="modify-form-border">
                   <input
                     className="modify-input"
@@ -127,9 +116,7 @@ const Userprofile = () => {
                     {...register("newpassword")}
                   />
                 </div>
-                <div className="modify-label-name">
-                  Xác nhận mật khẩu
-                </div>
+                <div className="modify-label-name">Xác nhận mật khẩu</div>
                 <div className="modify-form-border">
                   <input
                     className="modify-input"
@@ -138,10 +125,9 @@ const Userprofile = () => {
                   />
                 </div>
                 <div className="text-center">
-
-                <button className="modify-btn " type='submit'>
+                  <button className="modify-btn " type="submit">
                     Xác nhận
-                </button>
+                  </button>
                 </div>
               </form>
             </div>
