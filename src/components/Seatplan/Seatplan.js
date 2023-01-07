@@ -32,9 +32,8 @@ const Seatplan = () => {
   const [money, setMoney] = useState(0);
   const [seat, setSeat] = useState();
   const [showTimeDetail, setShowTimeDetail] = useState({});
-  const showtimedetail = JSON.parse(localStorage.getItem("@showtime"));
   const [movieDetail, setMovieDetail] = useState({});
-  const [room, setRoom] = useState({});
+  const [room, setRoom] = useState();
 
   for (var i = 1; i <= 10; i++) {
     row.push(i);
@@ -51,11 +50,8 @@ const Seatplan = () => {
       };
       await axios.get(API_TICKET, { params }).then((res) => {
         setShowtime(res?.data?.data?.data);
-
-
       });
     };
-    
 
     getTicket();
   }, []);
@@ -71,12 +67,12 @@ const Seatplan = () => {
   useEffect(() => {
     const getShowTimeDetail = async () => {
       await axios
-        .get(bindParam(API_SHOWTIME_DETAIL, { id: showtimedetail }))
+        .get(bindParam(API_SHOWTIME_DETAIL, { id }))
         .then((res) => {
           setShowTimeDetail(res?.data?.data);
           setMovieDetail(res?.data?.data?.movie);
           setRoom(res?.data?.data?.room);
-          console.log(movieDetail);
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -86,19 +82,21 @@ const Seatplan = () => {
   }, []);
 
   useEffect(() => {
-    const getSeat = async () => {
-      await axios
-        .get(bindParam(API_SEAT_IN_ROOM, { id }))
-        .then((res) => {
-          setSeat(res?.data?.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+    if (room) {
+      const getSeat = async () => {
+        await axios
+          .get(bindParam(API_SEAT_IN_ROOM, { id: room?.id }))
+          .then((res) => {
+            setSeat(res?.data?.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
 
-    getSeat();
-  }, []);
+      getSeat();
+    }
+  }, [room]);
 
   const onSelectSeat = (e) => {
     const { value, checked } = e.target;
@@ -112,10 +110,10 @@ const Seatplan = () => {
       const moneyClone = [...moneyDetail];
 
       const moneyFilter = moneyClone.filter(
-        (money) => money !== JSON.parse(value).money,
+        (money) => money !== JSON.parse(value).money
       );
       const seatFilter = seatClone.filter(
-        (seat) => seat?.id !== JSON.parse(value).id,
+        (seat) => seat?.id !== JSON.parse(value).id
       );
 
       setSelectSeat(seatFilter);
@@ -130,7 +128,7 @@ const Seatplan = () => {
       axios
         .post(API_ORDER_SEAT, {
           seats: selectSeat.map((seat) => seat.id).join(","),
-          showtime_id: Number(localStorage.getItem("@showtime")),
+          showtime_id: id,
           confirm: 0,
           money: moneyDetail.join(","),
           created_at: moment().format("YYYY-MM-DD HH:mm"),
@@ -148,7 +146,6 @@ const Seatplan = () => {
       history.push(LOGIN);
     }
   };
-  
 
   return (
     <Layout>
@@ -167,7 +164,7 @@ const Seatplan = () => {
       <div className="seatplan ">
         <div className="seatplan-title">
           <div className="seatplan-title-label">
-            Phòng chiếu <br /> {room.name}
+            Phòng chiếu <br /> {room && room.name}
           </div>
           <div className="seatplan-title-label">
             Giờ chiếu <br /> {showTimeDetail.show_time}
@@ -175,11 +172,6 @@ const Seatplan = () => {
           <div className="seatplan-title-label">
             Phim <br /> {movieDetail.name}
           </div>
-          {/* <div className="seatplan-title-label">Số ghế</div>
-          <div className="seatplan-title-label">
-            Time left
-            <br />
-          </div> */}
         </div>
         <div className="seatplan-content">
           <div className="seatplan-content-screen">
@@ -189,78 +181,96 @@ const Seatplan = () => {
               src="http://pixner.net/boleto/demo/assets/images/movie/screen-thumb.png"
               alt="man"
             />
-            <div className="seatwrap">
-              <div className="seatplan-content-screen-col">
-                {col.map((c) => {
-                  return <div className="col">{c}</div>;
-                })}
-              </div>
+            <div className="seatplan-content-screen-seatP">
+              <div className="seatwrap">
+                <div className="seatplan-content-screen-col">
+                  {col.map((c) => {
+                    return <div className="col">{c}</div>;
+                  })}
+                </div>
 
-              <div className="seatplan-content-screen-seat">
-                <div className="seatplan-content-screen-seat-single">
-                  {seat?.map((se) => {
-                    if (!!ticket.includes(se?.id)) {
-                      return (
-                        <div className={se?.type_seat == 3 ? `seatplan-content-screen-seat-single_check` : "seatplan-content-screen-seat-single_vip"}>
-                          <span className="checkbackground__checked underline">
-                            {se?.row}
-                            {se?.order}
-                          </span>
-                        </div>
-                      );
-                    } else {
-                      return (
-                        <div className={se?.type_seat == 3 ? `seatplan-content-screen-seat-single_check` : "seatplan-content-screen-seat-single_vip"}>
-                          <input
-                            onChange={onSelectSeat}
-                            className="checkseat"
-                            checked={ticket.includes(se?.id) ? true : null}
-                            value={JSON.stringify(se)}
-                            type="checkbox"
-                          />
-                          <span className="checkbackground underline">
-                            {se?.row}
-                            {se?.order}
-                          </span>
-                        </div>
-                      );
-                    }
+                <div className="seatplan-content-screen-seat">
+                  <div className="seatplan-content-screen-seat-single">
+                    {seat?.map((se) => {
+                      if (!!ticket.includes(se?.id)) {
+                        return (
+                          <div
+                            className={
+                              se?.type_seat == 3
+                                ? `seatplan-content-screen-seat-single_check`
+                                : "seatplan-content-screen-seat-single_vip"
+                            }
+                          >
+                            <span className="checkbackground__checked underline">
+                              {se?.row}
+                              {se?.order}
+                            </span>
+                          </div>
+                        );
+                      } else {
+                        return (
+                          <div
+                            className={
+                              se?.type_seat == 3
+                                ? `seatplan-content-screen-seat-single_check`
+                                : "seatplan-content-screen-seat-single_vip"
+                            }
+                          >
+                            <input
+                              onChange={onSelectSeat}
+                              className="checkseat"
+                              checked={ticket.includes(se?.id) ? true : null}
+                              value={JSON.stringify(se)}
+                              type="checkbox"
+                            />
+                            <span className="checkbackground underline">
+                              {se?.row}
+                              {se?.order}
+                            </span>
+                          </div>
+                        );
+                      }
+                    })}
+                  </div>
+                </div>
+              </div>
+              <div className="column-parent">
+                <div className="column-child"></div>
+                <div className="column">
+                  {row?.map((r) => {
+                    return <div className="column-count">{r}</div>;
                   })}
                 </div>
               </div>
-            </div>
-            <div className="column">
-              {row?.map((r) => {
-                return <div className="column-count">{r}</div>;
-              })}
             </div>
           </div>
         </div>
 
         <div className="container">
-          <div className="list-seat container row">
-            <div className="list-seat-tutor col-xl-6 d-flex">
+          <div className="list-seat  row">
+            <div className="list-seat-tutor col-xl-4 d-flex">
               Ghế thường:
               <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01.png" />
             </div>
-            <div className="list-seat-tutor col-xl-6 d-flex">
+            <div className="list-seat-tutor col-xl-4 d-flex">
               Ghế vip:
               <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-booked.png" />
             </div>
-            <div className="list-seat-tutor col-xl-6 d-flex">
+            <div className="list-seat-tutor col-xl-4 d-flex">
               Ghế đã chọn :
               <img src="http://pixner.net/boleto/demo/assets/images/movie/seat01-free.png" />
             </div>
-            {/* <div>Ghế đang chọn : <img src=""/></div> */}
           </div>
         </div>
         <div className="seatplan-proceed">
-          <div className="container">
+          <div className="container row">
             {/* <div className="seatplan-proceed-seat">
               Ghế đã chọn: {selectSeat.row}
             </div> */}
-            <div className="seatplan-proceed-price">Tổng tiền: {money} $</div>
-            <div className="seatplan-proceed-btn">
+            <div className="seatplan-proceed-price col-xl-6 ">
+              Tổng tiền: {money} $
+            </div>
+            <div className="seatplan-proceed-btn col-xl-6 ">
               <button type="submit" onClick={handlePayment}>
                 Thanh toán
               </button>

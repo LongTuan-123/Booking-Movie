@@ -10,11 +10,10 @@ const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-content container row m-auto">
-
         <div className="footer-content-right row">
-        <div className="footer-content-right col-xl-3 col-12">
-          <img className="" src={Logo} />
-        </div>
+          <div className="footer-content-right-logo col-xl-3 col-12">
+            <img className="" src={Logo} alt="lOGO" />
+          </div>
           <div className="footer-content-right-info col-xl-3 col-sm-12 text-center">
             Địa chỉ liên lạc
             <span>Số 12,ngách 394, đường Mỹ Đình, Hà Nội</span>
@@ -30,30 +29,27 @@ const Footer = () => {
               Kết nối với chúng tôi
             </div>
             <div className="d-flex justify-content-around">
-
-            <div className="footer-content-right-info-3-icon col-2 p-3">
-              <FacebookIcon width={28} height={28} />
-            </div>
-            <div className="footer-content-right-info-3-icon col-2 p-3">
-              <InstaIcon width={28} height={28} />
-            </div>
-            <div className="footer-content-right-info-3-icon col-2 p-3">
-              <PrinterIcon width={28} height={28} />
-            </div>
-            <div className="footer-content-right-info-3-icon col-2 p-3">
-              <YouTubeIcon width={28} height={28} />
-            </div>
-            <div className="footer-content-right-info-3-icon col-2 p-3">
-              <TwitterIcon width={28} height={28} />
-            </div>
+              <div className="footer-content-right-info-3-icon col-2 p-3">
+                <FacebookIcon width={28} height={28} />
+              </div>
+              <div className="footer-content-right-info-3-icon col-2 p-3">
+                <InstaIcon width={28} height={28} />
+              </div>
+              <div className="footer-content-right-info-3-icon col-2 p-3">
+                <PrinterIcon width={28} height={28} />
+              </div>
+              <div className="footer-content-right-info-3-icon col-2 p-3">
+                <YouTubeIcon width={28} height={28} />
+              </div>
+              <div className="footer-content-right-info-3-icon col-2 p-3">
+                <TwitterIcon width={28} height={28} />
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="footer-coppyright text-center">
-     
-          Copyright © 3622.All Rights Reserved By Long Dang Tuan
-        
+        Copyright © 3622.All Rights Reserved By Long Dang Tuan
       </div>
     </div>
   );

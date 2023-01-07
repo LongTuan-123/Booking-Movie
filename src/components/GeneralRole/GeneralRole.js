@@ -14,10 +14,6 @@ const GeneralRole = () => {
   const [limit] = useState(1000);
   const [page] = useState(1);
 
-  const history = useHistory();
-  const switchDetail = (id) => {
-    history.push(bindParam(NEWS_DETAIL, { id }));
-  };
   useEffect(() => {
     const getNews = async () => {
       const params = { limit, page, keyword };
@@ -32,13 +28,13 @@ const GeneralRole = () => {
         });
     };
     getNews();
-  }, [limit, page, keyword]);
+  }, []);
   return (
     <Layout>
-      <Navigation>Quy định chung</Navigation>
+      <Navigation></Navigation>
       <div className="generalrole">
         <div className="container">
-          <h1>Điều khoản quy định của rạp</h1>
+          <h1 className="mt-2">Điều khoản quy định của rạp</h1>
           <div>
             <h2>1.Tạo tài khoản</h2>
             <div className="detail">

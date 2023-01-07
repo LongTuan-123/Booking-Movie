@@ -11,18 +11,15 @@ import Slider from "react-slick";
 import {
   API_BANNER,
   API_MOVIES,
-  API_SHOWTIME,
   API_SHOWTIME_TIME,
 } from "../../config/endpointapi";
 import moment from "moment";
-import { Carousel, Col, Container, Row } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 
 const Home = () => {
-  const [movies, setMovies] = useState([]);
   const [limit] = useState(1000);
   const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
-  const [time, setTime] = useState("");
-  const [timeBaseOnDate, setTimeBaseOnDate] = useState([]);
+  const [showtimeId, setShowtimeId] = useState("");
   const [movieSelectTime, setMovieSelectTime] = useState([]);
   const [banner, setBanner] = useState([]);
   const [movieSelect, setMovieSelect] = useState([]);
@@ -30,44 +27,29 @@ const Home = () => {
   const [keyword, setKeyword] = useState("");
   const [page] = useState(1);
   const history = useHistory();
-
-  const settings = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    slidesToScroll: 1,
-    // centerPadding: "20px",
-    slidesToShow: movies?.length > 1 ? (movies?.length > 2 ? 3 : 2) : 1,
-  };
-
-  const settingListMovies = {
-    className: "center",
-    centerMode: true,
-    infinite: true,
-    slidesToScroll: 1,
-    // centerPadding: "20px",
-    slidesToShow: listMovies?.length > 1 ? (listMovies?.length > 2 ? 3 : 2) : 1,
+  const [selectDate, setSelectDate] = useState(moment().format("YYYY-MM-DD"));
+  console.log("Data: ", movieSelectTime, showtimeId);
+  var settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    initialSlide: 0,
     responsive: [
       {
         breakpoint: 1024,
-        settingListMovies: {
-          className: "center",
-          centerMode: true,
-          infinite: true,
-          slidesToScroll: 1,
-          // centerPadding: "20px",
+        settings: {
           slidesToShow: 2,
+          slidesToScroll: 2,
+          infinite: true,
         },
       },
       {
         breakpoint: 600,
-        settingListMovies: {
-          className: "center",
-          centerMode: true,
-          infinite: true,
+        settings: {
+          slidesToShow: 1,
           slidesToScroll: 1,
-          // centerPadding: "20px",
-          slidesToShow: listMovies?.length > 1 ? (listMovies?.length > 2 ? 3 : 2) : 1,
+          initialSlide: 1,
         },
       },
     ],
@@ -77,6 +59,10 @@ const Home = () => {
     history.push(bindParam(MOVIE_DETAIL, { id }));
   };
 
+  const handleSelectDate = (value) => {
+    setSelectDate(value);
+  };
+
   useEffect(() => {
     const getBanner = async () => {
       const params = { limit, page, keyword };
@@ -84,7 +70,6 @@ const Home = () => {
         .get(API_BANNER, { params })
         .then((res) => {
           setBanner(res?.data?.data?.data);
-          console.log(banner);
         })
         .catch((err) => {
           console.log(err);
@@ -92,36 +77,21 @@ const Home = () => {
     };
     getBanner();
   }, [limit, page, keyword]);
+
   useEffect(() => {
     const getListMovies = async () => {
-      const params = { limit, page, keyword };
+      const params = { limit, page, keyword: "" };
       await axios
         .get(API_MOVIES, { params })
         .then((res) => {
           setListMovies(res?.data?.data?.data);
-          console.log(listMovies);
         })
         .catch((err) => {
           console.log(err);
         });
     };
     getListMovies();
-  }, [limit, page, keyword]);
-
-  useEffect(() => {
-    const getShowtime = async () => {
-      const params = { limit, page, keyword, date, time };
-      await axios
-        .get(API_SHOWTIME, { params })
-        .then((res) => {
-          setMovies(res?.data?.data?.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    getShowtime();
-  }, [limit, page, keyword, time, date]);
+  }, [limit, page]);
 
   useEffect(() => {
     const getShowtime = async () => {
@@ -138,18 +108,13 @@ const Home = () => {
     getShowtime();
   }, [date]);
 
-  useEffect(() => {
-    if (movieSelectTime) {
-      let movieSelectClone = [];
-      movieSelectTime?.map((movies) => {
-        if (!movieSelectClone?.includes(movies?.show_time)) {
-          movieSelectClone.push(movies?.show_time);
-          // console.log(movies?.show_time);
-          setTimeBaseOnDate(movieSelectClone);
-        }
-      });
-    }
-  }, [movieSelectTime]);
+  const handleSeatBooking = () => {
+    history.push(bindParam(SEAT_PLAN, { id: showtimeId }));
+  };
+
+  const handleDate = (e) => {
+    setDate(e.target.value);
+  };
 
   useEffect(() => {
     if (movieSelectTime) {
@@ -164,28 +129,14 @@ const Home = () => {
     }
   }, [movieSelectTime]);
 
-  const handleSwitchTicket = (showtime) => {
-    const { room, id } = showtime;
-    history.push(bindParam(SEAT_PLAN, { id: room.id }));
-    localStorage.setItem("@showtime", id);
-  };
-
-  const handleDate = (e) => {
-    setDate(e.target.value);
-    setTimeBaseOnDate([]);
-  };
-
-  const handleTime = (e) => {
-    setTime(e.target.value);
-    // console.log(time);
+  const handleShowtimeId = (e) => {
+    setShowtimeId(e.target.value);
   };
 
   const handleKeyword = (e) => {
-    // console.log(e.target.value)
     setKeyword(e.target.value);
   };
 
-  console.log(movieSelect);
   return (
     <Layout>
       <div className="home">
@@ -195,6 +146,7 @@ const Home = () => {
               <Carousel.Item key={`slide_${id}`} interval={3000}>
                 <img
                   style={{ height: "100%" }}
+                  alt="something"
                   className=" d-block w-100 h-75"
                   src={slide.image}
                 />
@@ -205,13 +157,16 @@ const Home = () => {
 
         <div className="home-snapbook">
           <div className="container row">
-            <div className="booking_label col-sm-12 col-lg-3">
-              <img src="https://cinestar.com.vn/catalog/view/theme/default/images/icon-ticket.png" />
+            <div className="booking_label ">
+              <img
+                src="https://cinestar.com.vn/catalog/view/theme/default/images/icon-ticket.png"
+                alt="something"
+              />
               <div className="container-title">
                 <h2>Đặt vé Online</h2>
               </div>
             </div>
-            <div className="select_date col-sm-12 col-lg-3">
+            <div className="select_date col-sm-12 col-lg-4">
               <span className="container_input__title">Chọn ngày </span>
               <input
                 min={moment().format("YYYY-MM-DD")}
@@ -220,7 +175,7 @@ const Home = () => {
                 defaultValue={moment().format("YYYY-MM-DD")}
               />
             </div>
-            <div className="select_movie col-sm-12 col-lg-3">
+            <div className="select_movie col-sm-12 col-lg-4">
               <span className="container_input__title">Chọn phim</span>
               <select
                 defaultValue={"- Vui lòng chọn bộ phim -"}
@@ -236,80 +191,35 @@ const Home = () => {
               </select>
             </div>
 
-            <div className="select_time col-sm-12 col-lg-3">
-              <span className="container_input__title">Chọn giờ chiếu</span>
+            <div className="select_time col-sm-12 col-lg-4">
+              <span className="container_input__title">Chọn giờ </span>
               <select
                 defaultValue={"- Vui lòng chọn giờ chiếu -"}
-                onChange={handleTime}
+                onChange={handleShowtimeId}
               >
                 <option style={{ display: "none" }}>
                   -Vui lòng chọn giờ chiếu-
                 </option>
                 <option value={""}>Toàn bộ thời gian</option>
-                {timeBaseOnDate?.map((time) => {
-                  return <option value={time}>{time}</option>;
-                })}
+                {movieSelectTime &&
+                  movieSelectTime?.map((data) => {
+                    return <option value={data?.id}>{data.show_time}</option>;
+                  })}
               </select>
             </div>
+            {showtimeId && <button onClick={handleSeatBooking}>Đặt vé</button>}
           </div>
         </div>
         <div className="home-grid">
           <div className="home-grid-content ">
-            <div className="home-grid-content-title">
-              Danh sách suất chiếu chiếu
-            </div>
-            <div className="container">
-              {movies.length === 0 && (
-                <div className="container__no-movies">
-                  Không có bộ phim trong {date}
-                </div>
-              )}
-              <Slider {...settings}>
-                {movies.map((m) => {
-                  return (
-                    <div className="home-grid-content-image" key={m.id}>
-                      <img
-                        // style={{ width: 360 }}
-                        src={m?.movie?.poster}
-                        alt={m?.movie?.name}
-                      />
-                      <span>{m?.show_time}</span>
-                      <span>{m?.movie?.name}</span>
-                      <div className="home-grid-content-image-hover">
-                        <div
-                          className="home-grid-content-image-hover-booking"
-                          onClick={() => handleSwitchTicket(m)}
-                        >
-                          Đặt vé
-                        </div>
-                        <div className="home-grid-content-image-hover-info">
-                          <span>Thể loại: {m?.movie?.type_of_movie}</span>
-                          <span>
-                            Thời lượng: {m?.movie?.range_of_movie} phút
-                          </span>
-                        </div>
-                      </div>
-                      <div className="home-grid-content-image-background"></div>
-                    </div>
-                  );
-                })}
-              </Slider>
-            </div>
-          </div>
-          <div className="home-grid-content ">
             <div className="home-grid-content-title">Danh sách phim</div>
             <div className="container">
-              <Slider {...settingListMovies}>
+              <Slider {...settings}>
                 {listMovies.map((list) => {
                   return (
                     <div className="home-grid-content-image" key={list.id}>
-                      <img
-                        // style={{ width: 360 }}
-                        src={list?.poster}
-                        alt={list?.name}
-                      />
+                      <img src={list?.poster} alt={list?.name} />
                       <span>{list?.show_time}</span>
-                      <span>{list?.name}</span>
                       <div className="home-grid-content-image-hover">
                         <div
                           onClick={() => switchDetail(list?.id)}

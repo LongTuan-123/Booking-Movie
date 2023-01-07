@@ -27,7 +27,6 @@ const Payment = () => {
   const [money, setMoney] = useState(0);
   const show_time = localStorage.getItem("@showtime");
   const [showTimeDetail, setShowTimeDetail] = useState({});
-  const showtimedetail = JSON.parse(localStorage.getItem("@showtime"));
   const [movieDetail, setMovieDetail] = useState({});
   const [room, setRoom] = useState({});
 
@@ -55,7 +54,7 @@ const Payment = () => {
   useEffect(() => {
     const getShowTimeDetail = async () => {
       await axios
-        .get(bindParam(API_SHOWTIME_DETAIL, { id: showtimedetail }))
+        .get(bindParam(API_SHOWTIME_DETAIL, { id }))
         .then((res) => {
           setShowTimeDetail(res?.data?.data);
           setMovieDetail(res?.data?.data?.movie);
@@ -70,7 +69,7 @@ const Payment = () => {
 
   useEffect(() => {
     const deleteData = async () => {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+      axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
       await axios
         .post(API_DELETE_SEAT, {
           id_count: ticketID?.join(","),
@@ -107,12 +106,12 @@ const Payment = () => {
   }, []);
 
   const handleAccept = async () => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`
+    axios.defaults.headers.common["Authorization"] = `Bearer ${getToken()}`;
     await axios
       .post(API_PAY_SEAT, {
         confirm: 1,
         id_count: ticketID?.join(","),
-        showtime: show_time,
+        showtime: id,
       })
       .then(() => {
         localStorage.removeItem("@ticket");
@@ -144,9 +143,7 @@ const Payment = () => {
 
   return (
     <Layout>
-      <Navigation>
-        Thanh toán
-      </Navigation>
+      <Navigation>Thanh toán</Navigation>
       <ToastContainer
         position="top-right"
         autoClose={2000}

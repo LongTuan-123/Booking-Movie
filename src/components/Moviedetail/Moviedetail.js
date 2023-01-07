@@ -24,12 +24,12 @@ const Moviedetail = () => {
   const { id } = useParams();
   const [stars, setStars] = useState(0);
   const [date, setDate] = useState(new Date());
-  const [movies, setMovies] = useState([]);
   const [comment, setComment] = useState([]);
   const [data, setData] = useState({});
   const [status, setStatus] = useState(false);
   const [query, setQuery] = useState(false);
   const user = JSON.parse(localStorage.getItem("data_user"));
+  const [timeBaseOnDate, setTimeBaseOnDate] = useState([]);
   const [limit, setLimit] = useState(1000);
   const [keyword] = useState(id);
   const [page] = useState(1);
@@ -79,6 +79,22 @@ const Moviedetail = () => {
 
   useEffect(() => {
     const getData = async () => {
+      const params = { limit, page, keyword };
+      await axios
+        .get(API_EVALUATION, { params })
+        .then((res) => {
+          setComment(res?.data?.data?.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getData();
+  }, [query]);
+
+  useEffect(() => {
+    const getData = async () => {
       await axios
         .get(bindParam(API_MOVIES_DETAIL, { id }))
         .then((res) => {
@@ -103,6 +119,11 @@ const Moviedetail = () => {
     }
   }, [comment]);
 
+  const handleDate = (e) => {
+    setDate(e.target.value);
+    setTimeBaseOnDate([]);
+  };
+
   const handleSwitchTicket = (showtime) => {
     const { room, id } = showtime;
     history.push(bindParam(SEAT_PLAN, { id: room.id }));
@@ -122,9 +143,7 @@ const Moviedetail = () => {
         draggable
         pauseOnHover={false}
       />
-      <Navigation >
-        Chi tiết phim
-        </Navigation>
+      <Navigation>Chi tiết phim</Navigation>
       <div className="movieDetail">
         <div className="movieDetail-name">{data?.name}</div>
         <div className="movieDetail-content">
@@ -157,6 +176,28 @@ const Moviedetail = () => {
 
               <div className="movieDetail-content-info-right-time">
                 <span>Khởi chiếu : {data.start_date}</span>
+              </div>
+              <div className="movieDetail-content-info-right-calender">
+                <span>
+                  Ngày chiếu :
+                  <input
+                    min={moment().format("YYYY-MM-DD")}
+                    onChange={handleDate}
+                    type={"date"}
+                    defaultValue={moment().format("YYYY-MM-DD")}
+                  />
+                </span>
+              </div>
+              <div className="movieDetail-content-info-right-calender">
+                <span>
+                  Ngày chiếu :
+                  <input
+                    min={moment().format("YYYY-MM-DD")}
+                    onChange={handleDate}
+                    type={"date"}
+                    defaultValue={moment().format("YYYY-MM-DD")}
+                  />
+                </span>
               </div>
             </div>
             <div className="movieDetail-content-info-left col-sm-12 col-xl-6 mt-4 ">
